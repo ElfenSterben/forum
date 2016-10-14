@@ -1,0 +1,40 @@
+.box-container{
+    background-color: white;
+}
+.post-title{
+    padding: 10px 0px;
+}
+.post-body{
+    padding: 10px;
+}
+.box-comment-list{
+    margin: 20px 0px;
+}
+.box-comment-input{
+    background-color: white;
+    margin: 20px auto;
+}
+
+.box-comment-list{
+    background-color: white;
+    margin: 20px auto;
+}
+.comment-item-right{
+    padding-left: 10px;
+}
+.comment-user-name{
+    margin-bottom: 10px;
+}
+.input-comment{
+    padding: 10px;
+    height: 100px;
+    resize: none;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+}
+.input-comment:focus{
+    border: 1px solid gray;
+    outline: none;
+}

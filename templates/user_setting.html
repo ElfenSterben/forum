@@ -1,0 +1,75 @@
+{% extends "base_with_sidebar.html" %}
+{% block title %}
+设置
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/user_setting.css">
+{% endblock %}
+
+{% block main %}
+<div class="set-info box">
+    <div class="box-header underline">
+        <a class="my-link" href="/">{{hostname}}</a>
+        <span>&nbsp;>&nbsp; 设置</span>
+    </div>
+    <div class="form center">
+        <table>
+            <tr>
+                <td>
+                    <span>用户名:</span>
+                </td>
+                <td>
+                    <span>{{user.username}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>电子邮箱:</span>
+                </td>
+                <td>
+                    <input class="email" type="email" value="{{user.email}}">
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-set-info" name="button">保存修改</button>
+    </div>
+</div>
+<div class="password-change box">
+    <div class="box-header underline">
+        <a class="my-link" href="/">{{hostname}}</a>
+        <span>&nbsp;>&nbsp; 修改密码</span>
+    </div>
+    <div class="form center">
+        <table>
+            <tr>
+                <td>
+                    <span>当前密码:</span>
+                </td>
+                <td>
+                    <input class="old-password" type="password" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>新密码:</span>
+                </td>
+                <td>
+                    <input class="new-password" type="password" value="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>重复新密码:</span>
+                </td>
+                <td>
+                    <input class="confirm-password" type="password" value="">
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-change-password" name="button">修改密码</button>
+    </div>
+</div>
+
+{% endblock %}

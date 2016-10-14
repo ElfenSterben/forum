@@ -1,0 +1,85 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    background-image: url(/static/img/login_bg.jpg);
+}
+
+.container{
+    position: absolute;
+    top:300px;
+    left: 300px;
+    background-color: rgba(255, 255, 255, 0.7);;
+    float: left;
+}
+input {
+    height: 25px;
+    margin: 10px auto;
+    padding: 3px 5px;
+    border: solid 1px gray;
+    width: 200px;
+}
+.submit-box {
+    text-align: center;
+}
+
+.div-view-change {
+    font-size: 30px;
+    padding: 0px 123px;
+    margin-bottom: 10px;
+}
+.inline-block{
+    display: inline-block;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.login-selected {
+    position: relative;
+    left: 0px;
+    width: 60px;
+    height: 5px;
+    background-color: #ff723a;
+}
+.btn{
+    display: inline-block;
+    background-color: lightsalmon;
+    border: none;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 5px;
+    outline: none;
+}
+.btn:hover {
+    background-color: #ffb698;
+    cursor: pointer;
+}
+.btn:active{
+    background-color: #ff723a;
+}
+.hidden{
+    display: none;
+}
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+.check-item {
+    cursor: pointer;
+}
+.check-item:hover{
+    color: gray;
+}
+.login-message {
+    height: 30px;
+}
+.text-center{
+    text-align: center;
+}

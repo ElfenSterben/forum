@@ -1,0 +1,90 @@
+{% extends "base_with_sidebar.html" %}
+
+{% block title %}
+ {{ post.title }}
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/post.css">
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/api/comment.js"></script>
+<script src="/static/js/comment.js"></script>
+{% endblock %}
+
+{% block main %}
+<div id="top" class="div-post-box">
+    <div class="box-container">
+        <div class="post-header inner-box">
+            <div class="author-avatar float-right">
+                <a href="{{url_for('user.info_view',username=user.username)}}">
+                    <img class="img-big" src="{{post.user.avatar}}" alt="{{post.user.name}}" />
+                </a>
+            </div>
+            <a class="my-link" href="/">{{hostname}}</a>
+            <span>&nbsp;>&nbsp;</span>
+            <a class="my-link" href="/?node={{post.node.name}}">{{post.node.name}}</a>
+            <div class="post-title">
+                <h1>{{post.title}}</h1>
+            </div>
+            <div class="post-info">
+                <small>
+                    <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{post.user.username}}</a>
+                    <span class="info">·{{post.created_time}}</span>
+                </small>
+            </div>
+        </div>
+        <div class="post-body">
+            {{post.content}}
+        </div>
+    </div>
+    <div class="box-comment-list">
+        <div class="comment-list-header">
+            <div class="comment-info">
+                    <span class="comment-counts"></span>
+                    <span class="last-comment-time"></span>
+            </div>
+        </div>
+        <div class="comment-list">
+            {% for c in post.comments %}
+            <div class="comment-item inner-box clearfix">
+                <div class="comment-user-avatar float-left">
+                    <img class="img-middle" src="{{c.user.avatar}}" alt="" />
+                </div>
+                <div class="comment-item-right float-left">
+                    <div class="comment-user-name">
+                        <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{c.user.username}}</a>
+                        <span>{{c.created_time}}</span>
+                    </div>
+                    <div class="comment-comment">
+                        <span>{{c.content}}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="box-comment-input">
+        {% if user is none%}
+            <span>请<a class="btn" href="/login">登录</a>后再回复</span>
+        {% else %}
+        <div class="comment-input-header inner-box clearfix">
+            <a class="float-right" href="#top">↑回到顶部</a>
+            <p>
+                添加一条新回复
+            </p>
+        </div>
+        <div class="comment-input-body inner-box">
+            <textarea class="input-comment" data-postid="{{post.id}}"></textarea>
+            <p class="comment-message message"> <p>
+            <button class="btn btn-new-comment" type="button">回复</button>
+        </div>
+        <div class="comment-input-footer inner-box clearfix">
+            <a class="my-link float-right" href="/">←{{hostname}}</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

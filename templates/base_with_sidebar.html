@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="/static/css/sidebar.css">
+{% endblock %}
+{% block sidebar %}
+<div class="user-info">
+    {% if user is none%}
+    <div class="not-login">
+        <p>
+            现在还没有登录，马上登录？
+        </p>
+        <a class="btn" href="/login">登录</a>
+        <p>
+            没有帐号?马上 <a class="my-link" href="/login">注册帐号</a>
+        </p>
+    </div>
+    {% else %}
+    <div class="info-top underline box clearfix">
+        <div class="user-avatar float-left">
+            <img class="img-middle" src="{{user.avatar}}" alt="" />
+        </div>
+        <div class="user-username float-left">
+            <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{user.username}}</a>
+        </div>
+    </div>
+    <div class="info-buttom underline box">
+        <a class="my-link" href="{{url_for('post.new')}}">创建一个新主题</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

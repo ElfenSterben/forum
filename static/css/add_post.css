@@ -1,0 +1,54 @@
+.div-post-form{
+    background-color: white;
+    padding: 20px;
+}
+.font-size-16{
+    font-size: 16px;
+}
+.input-post-title{
+    width: 95%;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+.post-content{
+    margin: 10px 0px;
+}
+.input-post-content{
+    resize: none;
+    width: 95%;
+    height: 400px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+.post-node{
+    margin: 20px 0px;
+}
+.select-node{
+    width: 150px;
+    border-radius: 5px;
+    padding: 5px;
+}
+.btn{
+    background-color: lightsalmon;
+    border: none;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 5px;
+    outline: none;
+}
+.btn:hover {
+    background-color: #ffb698;
+    cursor: pointer;
+}
+.btn:active {
+    background-color: #ff9c74;
+    cursor: pointer;
+}
+
+.btn-post-add{
+    float: right;
+}

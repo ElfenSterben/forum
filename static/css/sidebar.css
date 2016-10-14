@@ -1,0 +1,16 @@
+.user-info{
+    background-color: white;
+    width: 300px;
+}
+.not-login {
+    padding: 30px 0px;
+    text-align: center;
+}
+
+.user-username{
+    margin-left: 10px;
+    line-height: 48px;
+}
+.underline{
+    border-bottom: 1px solid lightgray;
+}

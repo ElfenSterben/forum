@@ -1,0 +1,54 @@
+
+.div-node-all {
+    background-color: white;
+    padding: 20px 15px;
+    border-bottom: 1px solid lightgray;
+}
+.node-item {
+    display: inline-block;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding:2px 6px;
+    margin: 5px;
+    color: #2c2c2c;
+    text-decoration: none;
+}
+.node-item:hover {
+    background-color: lightgray;
+}
+.node-selected {
+    color: white;
+    background-color: black;
+}
+.div-post-list{
+    margin-top: 20px;
+    background-color: white;
+}
+.btn-new-post {
+    display: inline-block;
+    color: #2c2c2c;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color:lightgray;
+}
+.btn-new-post:hover{
+    text-decoration: underline;
+    background-color:#e4e4e4;
+}
+.btn-new-post:active{
+    background-color: silver;
+}
+.post-item-right{
+    margin-left: 10px;
+}
+.post-title{
+    font-size: 20px;
+}
+.post-info{
+    margin-top: 10px;
+}
+
+
+.no-post{
+    padding: 20px;
+}

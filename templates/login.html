@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/static/js/api/base.js"></script>
+    <script src="/static/js/api/login.js"></script>
+    <script src="/static/js/login.js"></script>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="div-view-change unselectable">
+            <div class="check-box center">
+                <div class="check-item inline-block" data-selected=".login-view">
+                    登录
+                </div>
+                <div class="check-item inline-block" data-selected=".register-view">
+                    注册
+                </div>
+            </div>
+            <div class="line-box">
+                <div class="bottom-line login-selected"></div>
+            </div>
+        </div>
+        <div class="box login-view view-item">
+            <div class="input-box">
+                <span>用&#12288;户&#12288;名:</span>
+                <input class="username" type="text" placeholder="请输入用户名">
+            </div>
+            <div class="input-box">
+                <span>密&#12288;&#12288;&#12288;码:</span>
+                <input class="password" type="password" placeholder="请输入密码">
+            </div>
+            <div class="div-message ">
+                <p class="text-center login-message message">
+                </p>
+            </div>
+            <div class="submit-box">
+                <button class="btn btn-login" type="button" name="button">提交</button>
+            </div>
+        </div>
+        <div class="box register-view view-item hidden">
+            <div class="input-box">
+                <span>用&#12288;户&nbsp;&nbsp;&nbsp;名:</span>
+                <input class="username" type="text" placeholder="请输入用户名">
+                <p class="text-center message username-message">
+                    输入8-20位用户名
+                </p>
+            </div>
+            <div class="input-box">
+                <span>密&#12288;&#12288;&nbsp;&nbsp;&nbsp;码:</span>
+                <input class="password" type="password" placeholder="请输入密码">
+                <p class="text-center message password-message">
+                    输入8-20位密码
+                </p>
+            </div>
+            <div class="input-box">
+                <span>重&nbsp;复&nbsp;密&nbsp;码:</span>
+                <input class="confirm-password" type="password" placeholder="请输入密码">
+                <p class="text-center message confirm-message">
+                    重复输入的密码
+                </p>
+            </div>
+            <div class="input-box">
+                <span>邮&#12288;&#12288;&nbsp;&nbsp;&nbsp;箱:</span>
+                <input class="email" type="email" placeholder="请输入邮箱">
+                <p class="text-center message email-message">
+                    输入邮箱
+                </p>
+            </div>
+            <div class="submit-box">
+                <button class="btn btn-register" type="button" name="button">提交</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

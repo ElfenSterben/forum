@@ -1,0 +1,35 @@
+{% extends "base_with_sidebar.html" %}
+{% block title %}
+节点管理
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    <script src="/static/js/api/node.js"></script>
+    <script src="/static/js/node.js"></script>
+{% endblock %}
+{% block main %}
+    <div class="div-node-new">
+        <div class="node-input-box">
+            <input class="input-node-content" type="text" name="name" value="">
+            <input class="input-node-description" type="text" name="description" value="">
+            <button class="node-new" type="button">添加</button>
+        </div>
+    </div>
+    <div class="node-lists">
+        {% for n in node_list %}
+            <div class="node-box">
+                <div class="node-item" data-id="{{n.id}}">
+                    <div class="node-title">
+                        <h1>{{n.name}}</h1>
+                    </div>
+                    <div class="node-content">
+                        {{n.description}}
+                    </div>
+                    <div class="node-action">
+                        <button class="node-delete" type="button">删除</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

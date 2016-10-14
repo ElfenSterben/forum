@@ -1,0 +1,30 @@
+.profile-top-right{
+    margin-left: 10px;
+}
+.check-user-name{
+    padding-top: 10px;
+    font-size: 24px;
+
+}
+.check-user-info{
+    margin-top: 10px;
+    color: #949494;
+}
+.check-user-post {
+    margin: 20px auto;
+}
+.bg-white{
+    background-color: white;
+}
+.bg-gray{
+    background-color: lightblue;
+}
+.user-comment-padding{
+    padding: 10px 15px 10px 15px;
+}
+.underline{
+    border-bottom: 1px solid gray;
+}
+.comment-item{
+    padding-bottom: 10px;
+}

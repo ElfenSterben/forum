@@ -1,0 +1,75 @@
+{% extends "base_with_sidebar.html" %}
+{% block title %}
+ {{ check_user.username }}
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/user_info.css">
+{% endblock %}
+
+
+{% block main %}
+    <div class="check-user-profile box">
+        <div class="profile-top clearfix">
+            <div class="profile-top-left float-left">
+                <div class="avatar">
+                    <img class="img-big" src="{{check_user.avatar}}" alt="" />
+                </div>
+            </div>
+            <div class="profile-top-right float-left">
+                <div class="check-user-name">
+                    <p>
+                        {{check_user.username}}
+                    </p>
+                </div>
+                <div class="check-user-info">
+                    <small>{{hostname}} 第 {{check_user.id}} 号会员, 加入于 <time>{{check_user.created_time}}</time></small>
+                </div>
+            </div>
+        </div>
+        <div class="profile-bottom">
+        </div>
+    </div>
+    <div class="check-user-post bg-white">
+        <div class="box-tab inner-box">
+            <span>{{check_user.username}}发布过的主题</span>
+        </div>
+        {% for p in check_user.posts %}
+        <div class="post-item inner-box">
+            <div class="post-title">
+                <h1><a class="my-link" href="{{url_for('post.view',post_id=p.id)}}">{{p.title}}</a></h1>
+            </div>
+            <div class="post-info">
+                <small>
+                    <a class="link-node" href="/?node={{p.node.name}}">{{p.node.name}}</a>
+                    <span>&nbsp;•&nbsp;</span>
+                    <a class="my-link" href="{{url_for('user.info_view', username=p.user.username)}}"><strong>{{p.user.username}}</strong></a>
+                    <span>&nbsp;•&nbsp;</span>
+                    <time>{{p.created_time}}</time>
+                </small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="check-user-comment bg-white">
+        <div class="box-tab inner-box">
+            <span>{{check_user.username}}的回复</span>
+        </div>
+        {% for c in check_user.comments %}
+        <div class="comment-item shandow underline">
+            <div class="comment-post user-comment-padding clearfix bg-gray">
+                <span>>>&nbsp;&nbsp;回复了 {{c.post.user.username}} 的主题</span>
+                <span>></span>
+                <a class="my-link" href="{{url_for('post.view',post_id=c.post.id)}}">{{c.post.title}}</a>
+                <time class="float-right">{{c.created_time}}</time>
+            </div>
+            <div class="comment-content user-comment-padding">
+                <p>
+                    {{c.content}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
