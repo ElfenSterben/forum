@@ -28,4 +28,4 @@ api.get = function(url, callback){
     api.ajax(url, 'get', {}, callback)
 }
 
-var base_url = 'http://localhost:3000'
+var base_url = 'http://kaede.cc'
