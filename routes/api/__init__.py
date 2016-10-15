@@ -7,7 +7,7 @@ from flask import send_from_directory
 from flask import session
 from flask import url_for
 from flask import abort
-from models.User import current_user
+from models.User import current_user, timestamp
 from functools import wraps
 
 main = Blueprint('api', __name__)
@@ -30,6 +30,17 @@ def user_required(f):
         else:
             return f(*args, **kwargs)
     return function
+
+@main.route('/current_time')
+def get_time():
+    r = {}
+    r['success'] = True
+    time = timestamp()
+    data = {
+        'current_time': time
+    }
+    r['data'] = data
+    return jsonify(r)
 
 
 from . import login
