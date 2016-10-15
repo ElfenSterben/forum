@@ -27,6 +27,12 @@ var formattime = function(current_time){
         }
     })
 }
+var animateDisplay = {
+    opacity: '1'
+}
+var animateHidden = {
+    opacity: '0'
+}
 
 var resettime = function(){
     var current_time = parseInt(Date.parse(new Date()) % 1000)
@@ -34,10 +40,10 @@ var resettime = function(){
         if(r.success){
             current_time = r.data.current_time
             formattime(current_time)
+            $('body').animate(animateDisplay, 500)
         }
     }
     api.getTime(response)
 }
-
 
 $(document).ready(resettime)

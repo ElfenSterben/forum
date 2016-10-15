@@ -3,6 +3,7 @@
     padding: 0px;
 }
 body{
+    opacity: 0;
     background-color: #e4e4e4;
 }
 a{
@@ -115,4 +116,7 @@ nav{
 .img-big{
     width: 73px;
     height: 73px;
+}
+.hidden{
+    display: none;
 }
