@@ -35,7 +35,7 @@
                     <small>
                         <a class="link-node" href="/?node={{p.node.name}}">{{p.node.name}}</a>
                         <span>&nbsp;•&nbsp;</span>
-                        <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{p.user.username}}</a>
+                        <a class="my-link" href="{{url_for('user.info_view',username=p.user.username)}}">{{p.user.username}}</a>
                         <span>&nbsp;•&nbsp;</span>
                         <span class="post-time">{{p.created_time}}</span>
                     </small>

@@ -13,6 +13,7 @@ def index():
     if node is not None:
         selected_node = node
     post_list = selected_node.posts
+    post_list.reverse()
     u = current_user()
     node_list = Node.query.all()
     data = {

@@ -1,7 +1,3 @@
-*{
-    margin: 0px;
-    padding: 0px;
-}
 body{
     background-image: url(/static/img/login_bg.jpg);
 }
@@ -12,6 +8,8 @@ body{
     left: 300px;
     background-color: rgba(255, 255, 255, 0.7);;
     float: left;
+    width: 380px;
+    padding: 10px 20px;
 }
 input {
     height: 25px;
@@ -77,9 +75,12 @@ input {
 .check-item:hover{
     color: gray;
 }
-.login-message {
-    height: 30px;
+.message{
+    margin: 0px auto;
 }
 .text-center{
     text-align: center;
+}
+.error{
+    color: red;
 }

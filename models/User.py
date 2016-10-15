@@ -9,6 +9,8 @@ def current_user():
         return User.query.get(u_id)
     return None
 
+valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+email_valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@.-'
 
 class User(Model, db.Model):
     __tablename__ = 'user'
@@ -70,52 +72,104 @@ class User(Model, db.Model):
         password_valid = cls.password_valid(password, confirm_password, message)
         email_valid = cls.email_valid(email, message)
         success = username_valid and email_valid and password_valid
-        if success:
-            return True
-        else:
-            return False
+        return success
 
     @classmethod
     def username_valid(cls, username, message):
+        username = username.strip()
+        for c in username:
+            if c not in valid_str:
+                message['.username-message'] = '输入8-20位用户名,只能使用英文字母、下划线及数字'
+                return False
+
         length_valid = 8 <= len(username) <= 20
         u = User.query.filter_by(username=username).first()
         not_exist = u is None
-        if length_valid and not_exist:
-            return True
+
         if not length_valid:
-            message['.username-message'] = '请输入8-20位用户名'
+            message['.username-message'] = '输入8-20位用户名,只能使用英文字母、下划线及数字'
         elif not not_exist:
             message['.username-message'] = '用户名已存在'
-        return False
+
+        return length_valid and not_exist
 
     @classmethod
     def password_valid(cls, password, confirm_password, message):
+        password = password.strip()
+        for c in password:
+            if c not in valid_str:
+                message['.password-message'] = '输入8-20位密码,只能使用英文字母、下划线及数字'
+                return False
+
+        confirm_password = confirm_password.strip()
         length_valid = 8 <= len(password) <= 20
         confirm_valid = password == confirm_password
-        if length_valid and confirm_valid:
-            return True
+
         if not length_valid:
-            message['.password-message'] = '请输入8-20位密码'
+            message['.password-message'] = '输入8-20位密码,只能使用英文字母、下划线及数字'
         if not confirm_valid:
-            message['.confirm-message'] = '请输入相同的密码'
-        return False
+            message['.confirm-message'] = '重复输入的密码'
+
+        return length_valid and confirm_valid
 
     @classmethod
     def email_valid(cls, email, message):
-        split_email = email.split('@')
+        email = email.strip()
+        for c in email:
+            if c not in email_valid_str:
+                message['.email-message'] = '请输入正确的邮箱'
+                return False
+
+        split_email = email.split('@', 1)
         split_valid = len(split_email) == 2
-        if not split_valid:
-            message['.email-message'] = '请输入正确的邮箱'
-            return False
-
-        before_valid = split_email[0] != ''
-        after_valid = split_email[1] != ''
-
-        if before_valid and after_valid:
-            return True
+        if split_valid and split_email[0] != '' and split_email[1] != '':
+            host = split_email[1]
+            split_host = host.split('.', 1)
+            split_valid = len(split_host) == 2
+            if split_valid and split_host[0] != '' and split_host[1] != '':
+                u = cls.query.filter_by(email=email).first()
+                if u is None:
+                    return True
+                message['.email-message'] = '邮箱已被注册'
         else:
             message['.email-message'] = '请输入正确的邮箱'
-            return False
+        return False
+
+    def setting_valid(self, form, message):
+        email = form.get('email')
+        email_valid = User.email_valid(email, message)
+        return email_valid
+
+    def change_password_valid(self, form, message):
+        old = form.get('old-password')
+        new = form.get('new-password')
+        confirm = form.get('confirm-password')
+        old_valid = old == self.password
+        new_valid = User.password_valid(new, confirm, message)
+
+        if not old_valid:
+            message['.old-psw-message'] = '请输入当前密码'
+
+        return new_valid and old_valid
+
+    def setting(self, form, r):
+        message = {}
+        valid = self.setting_valid(form, message)
+        r['success'] = valid
+        if valid:
+            self.email = form.get('email')
+            self.save()
+        else:
+            r['message'] = message
+
+    def change_password(self, form, r):
+        message = {}
+        valid = self.change_password_valid(form, message)
+        r['success'] = valid
+        if valid:
+            self.password = form.get('new-password')
+        else:
+            r['message'] = message
 
     def json(self):
         json = {

@@ -36,3 +36,4 @@ from . import login
 from . import node
 from . import post
 from . import comment
+from . import user
