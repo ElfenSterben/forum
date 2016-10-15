@@ -8,12 +8,17 @@
 {% endblock %}
 {% block main %}
 <div class="div-node-all">
+    <a class="node-item
+{% if select_all %}
+    node-selected
+{% endif %}
+    " href="/">All</a>
     {% for n in node_list %}
         <a class="node-item
-    {% if n.name == selected_node.name%}
+    {% if selected_node is not none and n.name == selected_node.name%}
         node-selected
     {% endif %}
-        " href="/?node={{n.name}}">{{n.name}}</a>
+        " href="/{{n.name}}">{{n.name}}</a>
     {% endfor %}
 </div>
 <div class="div-post-list">
@@ -33,7 +38,7 @@
                 </div>
                 <div class="post-info">
                     <small>
-                        <a class="link-node" href="/?node={{p.node.name}}">{{p.node.name}}</a>
+                        <a class="link-node" href="/{{p.node.name}}">{{p.node.name}}</a>
                         <span>&nbsp;•&nbsp;</span>
                         <a class="my-link" href="{{url_for('user.info_view',username=p.user.username)}}">{{p.user.username}}</a>
                         <span>&nbsp;•&nbsp;</span>
