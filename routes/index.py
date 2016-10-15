@@ -24,7 +24,7 @@ def index():
 def node_index(node_name):
     selected_node = Node.query.filter_by(name=node_name).first()
     if selected_node is None:
-        return redirect('index.index')
+        return redirect(url_for('index.index'))
     post_list = selected_node.posts
     if len(post_list) != 0:
         post_list.reverse()

@@ -32,7 +32,7 @@
             <div class="post-info">
                 <small>
                     <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{post.user.username}}</a>
-                    <span class="info">·{{post.created_time}}</span>
+                    <time>·{{post.created_time}}</time>
                 </small>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <div class="comment-item-right float-left">
                     <div class="comment-user-name">
                         <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{c.user.username}}</a>
-                        <span>{{c.created_time}}</span>
+                        <time>{{c.created_time}}</time>
                     </div>
                     <div class="comment-comment">
                         <span>{{c.content}}</span>
