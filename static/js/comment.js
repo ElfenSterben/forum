@@ -1,14 +1,16 @@
 var commentTemplate = function(d){
     var c = d.comment
     var u = d.user
+    c.content = c.content.replace(/</g, '&lt;')
+    c.content = c.content.replace(/>/g, '&gt;')
     var t = `
-    <div class="comment-item">
-        <div class="comment-user-avatar">
-            <img src="${u.avatar}" alt="" />
+    <div class="comment-item inner-box clearfix">
+        <div class="comment-user-avatar float-left">
+            <img class="img-middle" src="${u.avatar}" alt="" />
         </div>
-        <div class="comment-item-right">
+        <div class="comment-item-right float-left">
             <div class="comment-user-name">
-                <a href="/user/${u.username}">${u.username}</a>
+                <a class="my-link" href="/user/${u.username}">${u.username}</a>
                 <span>${c.created_time}</span>
             </div>
             <div class="comment-comment">
