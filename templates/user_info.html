@@ -24,7 +24,7 @@
                     </p>
                 </div>
                 <div class="check-user-info">
-                    <small>{{hostname}} 第 {{check_user.id}} 号会员, 加入于 <time>{{check_user.created_time}}</time></small>
+                    <small>{{hostname}} 第 {{check_user.id}} 号会员 加入于 <time class="usr-reg-time">{{check_user.created_time}}</time></small>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
             <span>{{check_user.username}}的回复</span>
         </div>
         {% for c in check_user.comments %}
-        <div class="comment-item shandow underline">
+        <div class="comment-item shandow underline-gray">
             <div class="comment-post user-comment-padding clearfix bg-gray">
                 <span>>>&nbsp;&nbsp;回复了 {{c.post.user.username}} 的主题</span>
                 <span>></span>

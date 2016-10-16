@@ -1,6 +1,9 @@
 
 var formattime = function(current_time){
-    var time = $('time')
+    var usr_reg_time = $('time.usr-reg-time').first()
+    var reg_time = parseInt(usr_reg_time.text())
+    usr_reg_time.text(new Date(reg_time * 1000).toLocaleString())
+    var time = $('time:not(.usr-reg-time)')
     time.map(function(){
         var old_time = $(this).text()
         var timestamp = current_time - old_time
@@ -13,7 +16,7 @@ var formattime = function(current_time){
                 $(this).text(day + "天前")
             }
             else{
-                $(this).text(new Date(old_time).toLocaleString())
+                $(this).text(new Date(old_time * 1000).toLocaleString())
             }
         }
         else if(hours != 0){
