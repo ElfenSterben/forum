@@ -32,7 +32,8 @@
             <div class="post-info">
                 <small>
                     <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{post.user.username}}</a>
-                    <time>·{{post.created_time}}</time>
+                    <span>&nbsp;•&nbsp;</span>
+                    <time>{{post.created_time}}</time>
                 </small>
             </div>
         </div>

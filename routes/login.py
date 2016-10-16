@@ -9,7 +9,7 @@ main = Blueprint('login', __name__)
 def login_view():
     u = current_user()
     if u is not None:
-        return redirect(url_for('post.all_post'))
+        return redirect(url_for('index.index'))
     return render_template('login.html')
 
 
