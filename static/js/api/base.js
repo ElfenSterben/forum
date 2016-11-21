@@ -35,4 +35,4 @@ api.getTime = function(callback){
 
 
 var base_url = 'http://kaede.cc'
-var base_url = 'http://localhost:3000'
+// var base_url = 'http://localhost:3000'
