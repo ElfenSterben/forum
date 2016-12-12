@@ -10,3 +10,12 @@ def post_add():
     n_json = request.get_json()
     Post.add(n_json, r)
     return jsonify(r)
+
+
+@main.route('/post/update/<int:post_id>', methods=['post'])
+@user_required
+def post_update(post_id):
+    r = {}
+    n_json = request.get_json()
+    Post.update(post_id, n_json, r)
+    return jsonify(r)

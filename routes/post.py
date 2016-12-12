@@ -29,3 +29,28 @@ def view(post_id):
     }
     data_list.update(data)
     return render_template('post.html', **data_list)
+
+@main.route('/edit/<int:post_id>')
+@user_required
+def edit(post_id):
+    u = current_user()
+    p = Post.query.get(post_id)
+    valid = Post.permission_valid(p)
+    if valid:
+        data = {
+            'post': p,
+            'user': u
+        }
+        data_list.update(data)
+        return render_template('edit_post.html', **data_list)
+    else:
+        abort(403)
+
+@main.route('/delete/<int:post_id>')
+@user_required
+def delete(post_id):
+    p = Post.query.get(post_id)
+    node_name = p.node.name
+    Post.post_delete(post_id)
+
+    return redirect(url_for('index.node_index',node_name=node_name))

@@ -43,12 +43,13 @@ class User(Model, db.Model):
         username = form.get('username')
         password = form.get('password')
         u = cls.query.filter_by(username=username).first()
-        if u is None or u.password != password:
+        valid = u is None or u.password != password
+        if valid:
             message['.login-message'] = '用户名或密码错误'
-            return False
         else:
             session['user_id'] = u.id
-            return True
+
+        return not valid
 
     @classmethod
     def register(cls, form, r):
@@ -58,6 +59,7 @@ class User(Model, db.Model):
         if valid:
             u = cls(form)
             u.save()
+            u = cls.query.filter_by(username=u.username).first()
             session['user_id'] = u.id
         else:
             r['message'] = message

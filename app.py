@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from flask_wtf.csrf import CsrfProtect
 
 from models import db
 from models.Node import Node
@@ -14,11 +15,10 @@ from routes.api import main as routes_api
 from routes.login import main as routes_login
 from routes.logout import main as routes_logout
 from routes.user import main as routes_user
-from config import config
 
 app = Flask(__name__)
 manager = Manager(app)
-
+csrf = CsrfProtect()
 
 def register_routes(app):
     app.register_blueprint(routes_index)
@@ -30,9 +30,9 @@ def register_routes(app):
     app.register_blueprint(routes_user, url_prefix='/user')
 
 def configure_app():
-    for k, v in config.items():
-        app.config[k] = v
+    app.config.from_object('config')
     db.init_app(app)
+    csrf.init_app(app)
     register_routes(app)
 
 def configured_app():
@@ -45,8 +45,9 @@ def server():
     print('server run')
     # app = configured_app()
     config = dict(
-        host='0.0.0.0',
-        port=3000,
+        debug = True,
+        host = '127.0.0.1',
+        port = 3000,
     )
     app.run(**config)
 

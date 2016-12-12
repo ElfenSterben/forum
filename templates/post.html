@@ -40,6 +40,13 @@
         <div class="post-body">
             {{post.content}}
         </div>
+        <div class="post-footer">
+            <form action="{{ url_for('post.delete', post_id=post.id) }}">
+                <input type="hidden" value="{{ csrf_token() }}">
+                <button type="submit">删除</button>
+            </form>
+            <a href=" url_for('post.edit', post_id=post.id)">编辑</a>
+        </div>
     </div>
     <div class="box-comment-list">
         <div class="comment-list-header">

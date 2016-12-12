@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{% block title %} {% endblock %} > {{hostname}}</title>
         <script src="/static/js/jquery-3.0.0.min.js"></script>
         <script src="/static/js/api/base.js"></script>
