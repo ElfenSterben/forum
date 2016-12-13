@@ -34,6 +34,7 @@
                     <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{post.user.username}}</a>
                     <span>&nbsp;•&nbsp;</span>
                     <time>{{post.created_time}}</time>
+                    <span>发布</span>
                 </small>
             </div>
         </div>
@@ -41,11 +42,13 @@
             {{post.content}}
         </div>
         <div class="post-footer">
+            {% if post.user_id == user.id %}
             <form action="{{ url_for('post.delete', post_id=post.id) }}">
                 <input type="hidden" value="{{ csrf_token() }}">
                 <button type="submit">删除</button>
             </form>
-            <a href=" url_for('post.edit', post_id=post.id)">编辑</a>
+            <a href="{{ url_for('post.edit', post_id=post.id) }}">编辑</a>
+            {% endif %}
         </div>
     </div>
     <div class="box-comment-list">
@@ -81,7 +84,7 @@
         <div class="comment-input-header inner-box clearfix">
             <a class="float-right" href="#top">↑回到顶部</a>
             <p>
-                添加一条新回复
+                添加一条新评论
             </p>
         </div>
         <div class="comment-input-body inner-box">

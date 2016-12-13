@@ -5,7 +5,7 @@ class Node(Model, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True)
     description = db.Column(db.String(100))
-    posts = db.relationship('Post', backref='node')
+    posts = db.relationship('Post', lazy='dynamic', backref='node')
     hidden = db.Column(db.Boolean, default=False)
 
     def __init__(self, form):

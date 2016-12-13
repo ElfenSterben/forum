@@ -1,0 +1,53 @@
+{% extends "base_with_sidebar.html" %}
+
+{% block title %}
+   编辑
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/api/edit_post.js"></script>
+<script src="/static/js/edit_post.js"></script>
+{% endblock %}
+
+{% block css%}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/add_post.css">
+{% endblock %}
+
+{% block main %}
+<div class="div-post-form" data-id="{{ post.id }}">
+    <p class="post-exist-message message"></p>
+    <div class="post-title">
+        <p>标题</p>
+        <input class="input-post-title" type="text" name="title" value="{{ post.title }}">
+        <p class="post-title-message message">
+            标题请输入2-30个字符
+        </p>
+    </div>
+    <div class="post-content">
+        <p>内容</p>
+        <textarea class="input-post-content font-size-16" name="content">{{ post.content }}</textarea>
+        <p class="post-content-message message">
+            内容请输入10-1000个字符
+        </p>
+    </div>
+    <div class="post-node">
+        <p>节点选择</p>
+        <select class="select-node font-size-16" name="node_id">
+        {% for n in node_list %}
+            {% if n.id == post.node.id %}
+            <option value ="{{ n.id }}" selected>{{ n.name }}</option>
+            {% else %}
+            <option value ="{{ n.id }}" >{{ n.name }}</option>
+            {% endif %}
+        {% endfor %}
+        </select>
+        <p class="post-node-message message">
+            节点选择
+        </p>
+    </div>
+    <div class="post-action clearfix">
+        <button class="btn btn-post-add" type="submit">提交</button>
+    </div>
+</div>
+{% endblock %}

@@ -21,8 +21,8 @@ class User(Model, db.Model):
     password = db.Column(db.String(20))
     email = db.Column(db.String(50), unique=True)
     avatar = db.Column(db.String(50), default='/static/avatar/default_avatar.gif')
-    posts = db.relationship('Post', backref='user')
-    comments = db.relationship('Comment', backref='user')
+    posts = db.relationship('Post', lazy='dynamic', backref='user')
+    comments = db.relationship('Comment', lazy='dynamic', backref='user')
 
     def __init__(self, form):
         super(User, self).__init__()

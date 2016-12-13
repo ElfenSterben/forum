@@ -35,9 +35,11 @@ def view(post_id):
 def edit(post_id):
     u = current_user()
     p = Post.query.get(post_id)
-    valid = Post.permission_valid(p)
+    valid = Post.permission_valid(p, {})
+    node_list = Node.query.filter_by(hidden=False)
     if valid:
         data = {
+            'node_list': node_list,
             'post': p,
             'user': u
         }
@@ -49,8 +51,5 @@ def edit(post_id):
 @main.route('/delete/<int:post_id>')
 @user_required
 def delete(post_id):
-    p = Post.query.get(post_id)
-    node_name = p.node.name
     Post.post_delete(post_id)
-
-    return redirect(url_for('index.node_index',node_name=node_name))
+    return redirect(url_for('index.index'))

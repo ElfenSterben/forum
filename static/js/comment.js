@@ -11,7 +11,7 @@ var commentTemplate = function(d){
         <div class="comment-item-right float-left">
             <div class="comment-user-name">
                 <a class="my-link" href="/user/${u.username}">${u.username}</a>
-                <span>${c.created_time}</span>
+                <time>${c.created_time}<time>
             </div>
             <div class="comment-comment">
                 <span>${c.content}</span>

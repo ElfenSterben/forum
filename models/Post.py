@@ -13,7 +13,7 @@ class Post(Model, db.Model):
     content = db.Column(db.String(1000))
     hidden = db.Column(db.Boolean, default=False)
     node_id = db.Column(db.Integer, db.ForeignKey('node.id'))
-    comments = db.relationship('Comment', backref='post')
+    comments = db.relationship('Comment', lazy='dynamic', backref='post')
 
     def __init__(self, form):
         self.created_time = timestamp()
@@ -35,6 +35,7 @@ class Post(Model, db.Model):
             p.edit_time = timestamp()
             p.title = form.get('title', '')
             p.content = form.get('content', '')
+            p.node_id = form.get('node_id', '1')
             p.save()
         r['message'] = message
 
@@ -75,8 +76,8 @@ class Post(Model, db.Model):
         message = {}
         valid = cls.permission_valid(p, message)
         if valid:
+            p.comments.delete()
             super(cls, p).delete()
-
 
 
     @classmethod
@@ -86,7 +87,7 @@ class Post(Model, db.Model):
         if post is not None:
             result = u.username == post.user.username
         if not result:
-            message['post-exist-message'] = '文章不存在'
+            message['.post-exist-message'] = '文章不存在'
 
         return result
 

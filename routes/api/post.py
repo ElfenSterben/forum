@@ -16,6 +16,9 @@ def post_add():
 @user_required
 def post_update(post_id):
     r = {}
+    data = {}
+    data['url'] = '/post/' + str(post_id)
+    r['data'] = data
     n_json = request.get_json()
     Post.update(post_id, n_json, r)
     return jsonify(r)
