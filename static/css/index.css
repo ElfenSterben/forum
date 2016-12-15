@@ -47,7 +47,18 @@
 .post-info{
     margin-top: 10px;
 }
-
+.page_num {
+    display: inline-block;
+    border: 1px black solid;
+    padding: 5px;
+    width: 20px;
+    text-align: center;
+    border-radius: 3px;
+}
+.page_selected {
+    background-color: black;
+    color: white;
+}
 
 .no-post{
     padding: 20px;

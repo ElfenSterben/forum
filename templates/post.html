@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="comment-list">
-            {% for c in post.comments %}
+            {% for c in post_comments %}
             <div class="comment-item inner-box clearfix">
                 <div class="comment-user-avatar float-left">
                     <img class="img-middle" src="{{c.user.avatar}}" alt="" />
@@ -75,6 +75,27 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
+        <div class="div-pages">
+            <div class="center">
+                {% if paginate.has_prev %}
+                <a class="page_button" href="{{ url_for('index.index', page=paginate.prev_num) }}">上一页</a>
+                {% endif %}
+                {% for n in paginate.iter_pages(1,2,2,1)%}
+                {% if n == paginate.page %}
+                    <a class="page_num page_selected" href="#">{{ n }}</a>
+                {% else %}
+                    {% if n is none%}
+                    <span class="page_num">...</span>
+                    {%else%}
+                    <a class="page_num" href="{{ url_for('index.index', page=n)}}">{{ n }}</a>
+                    {% endif %}
+                {% endif %}
+                {% endfor %}
+                {% if paginate.has_next %}
+                <a class="page_button" href="{{ url_for('index.index', page=paginate.next_num) }}">下一页</a>
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="box-comment-input">
