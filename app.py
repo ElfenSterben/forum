@@ -43,7 +43,7 @@ def configured_app():
 @manager.command
 def server():
     print('server run')
-    # app = configured_app()
+    app = configured_app()
     config = dict(
         debug = True,
         host = '127.0.0.1',

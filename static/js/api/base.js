@@ -30,10 +30,6 @@ api.get = function(url, callback){
     api.ajax(url, 'get', null, callback)
 }
 
-api.getTime = function(callback){
-    var url = '/api/current_time'
-    api.get(url, callback)
-}
 
 //var base_url = 'http://kaede.cc'
  var base_url = 'http://localhost:3000'

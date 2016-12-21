@@ -10,12 +10,13 @@ from flask import abort
 from flask import flash
 
 
-from models.User import current_user
+from models.User import current_user, timestamp
 from .api import admin_required
 from .api import user_required
 
 hostname = 'kaede'
 
 data_list = {
-    'hostname': hostname
+    'hostname': hostname,
+    'current_time': timestamp(),
 }

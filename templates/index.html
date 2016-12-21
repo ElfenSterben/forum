@@ -8,11 +8,7 @@
 {% endblock %}
 {% block main %}
 <div class="div-node-all">
-    <a class="node-item
-{% if select_node is none %}
-    node-selected
-{% endif %}
-    " href="/">All</a>
+    <a class="node-item {% if selected_node is none %}node-selected{% endif %}" href="/">All</a>
     {% for n in node_list %}
         <a class="node-item
     {% if selected_node is not none and n.name == selected_node.name%}
@@ -56,7 +52,7 @@
             {% endif %}
             {% for n in paginate.iter_pages(1,2,2,1)%}
             {% if n == paginate.page %}
-                <a class="page_num page_selected" href="#">{{ n }}</a>
+                <a class="page_num page_selected">{{ n }}</a>
             {% else %}
                 {% if n is none%}
                 <span class="page_num">...</span>
