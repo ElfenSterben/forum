@@ -20,7 +20,7 @@ class User(Model, db.Model):
     username = db.Column(db.String(20), unique=True)
     password = db.Column(db.String(20))
     email = db.Column(db.String(50), unique=True)
-    avatar = db.Column(db.String(50), default='/static/avatar/default_avatar.gif')
+    avatar = db.Column(db.String(200), default='/static/avatar/default_avatar.gif')
     posts = db.relationship('Post', lazy='dynamic', backref='user')
     comments = db.relationship('Comment', lazy='dynamic', backref='user')
 

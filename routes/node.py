@@ -14,7 +14,6 @@ def node_view():
         'node_list': node_list,
         'user': u
     }
-    data_list.update(data)
-    return render_template('nodes.html', **data_list)
+    return render_template('nodes.html', **data)
 
 

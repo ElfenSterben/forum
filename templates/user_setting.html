@@ -14,6 +14,20 @@
 {% endblock %}
 
 {% block main %}
+<div class="set-avatar box">
+    <div class="box-header underline">
+        <a class="my-link" href="/">{{hostname}}</a>
+        <span>&nbsp;>&nbsp; 修改头像</span>
+    </div>
+    <div class="form center">
+        <form action="/api/upload/avatar" method="post" enctype="multipart/form-data">
+            <img class="img-big" src="{{ user.avatar }}">
+            <input type="file" name="photo" required>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-set-avatar" name="button">上传头像</button>
+        </form>
+    </div>
+</div>
 <div class="set-info box">
     <div class="box-header underline">
         <a class="my-link" href="/">{{hostname}}</a>

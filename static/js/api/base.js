@@ -1,12 +1,11 @@
 var api = {}
-api.ajax = function(url, method, form, callback){
-    var form = JSON.stringify(form)
+api._ajax = function(url, method, data, contentType, callback){
     var csrfToken = $('meta[name=csrf-token]').attr('content')
     var request = {
         url: url,
         type: method,
-        contentType: "application/json; charset=utf-8",
-        data: form,
+        contentType: contentType,
+        data: data,
         headers: {'X-CSRFToken': csrfToken},
         success: function(response){
             callback(response)
@@ -22,12 +21,17 @@ api.ajax = function(url, method, form, callback){
     $.ajax(request)
 }
 
-api.post = function(url, form, callback){
-    api.ajax(url, 'post', form, callback)
+api.ajax = function(url, method, data, callback){
+    var contentType = "application/json; charset=utf-8"
+    api._ajax(url, method, data, contentType, callback)
+}
+
+api.post = function(url, data, callback){
+    api.ajax(url, 'post', data, callback)
 }
 
 api.get = function(url, callback){
-    api.ajax(url, 'get', null, callback)
+    api.ajax(url, 'get', '', callback)
 }
 
 

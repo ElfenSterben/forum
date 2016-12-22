@@ -14,8 +14,7 @@ def new():
         'user': u,
         'node_list': node_list
     }
-    data_list.update(data)
-    return render_template('add_post.html', **data_list)
+    return render_template('add_post.html', **data)
 
 @main.route('/<int:post_id>')
 def view(post_id):
@@ -23,11 +22,11 @@ def view(post_id):
     p = Post.query.get(post_id)
     if p is None:
         abort(404)
+
     page = request.args.get('page', '1')
     if not page.isdigit():
         page = '1'
     page = int(page)
-    print(page)
     pre_page = current_app.config.get('COMMENT_PRE_PAGE', 20)
     paginate = p.comments.paginate(page, pre_page, False)
     post_comments = paginate.items
@@ -37,15 +36,17 @@ def view(post_id):
         'paginate': paginate,
         'post_comments': post_comments,
     }
-    data_list.update(data)
-    return render_template('post.html', **data_list)
+    return render_template('post.html', **data)
 
 @main.route('/edit/<int:post_id>')
 @user_required
 def edit(post_id):
     u = current_user()
     p = Post.query.get(post_id)
-    valid = Post.permission_valid(p, {})
+    if p is None:
+        abort(404)
+
+    valid = p.permission_valid(u)
     node_list = Node.query.filter_by(hidden=False)
     if valid:
         data = {
@@ -53,13 +54,22 @@ def edit(post_id):
             'post': p,
             'user': u
         }
-        data_list.update(data)
-        return render_template('edit_post.html', **data_list)
+        return render_template('edit_post.html', **data)
     else:
-        abort(403)
+        abort(404)
 
 @main.route('/delete/<int:post_id>')
 @user_required
 def delete(post_id):
-    Post.post_delete(post_id)
-    return redirect(url_for('index.index'))
+    u = current_user()
+    p = Post.query.get(post_id)
+    if p is None:
+        abort(404)
+
+    valid = p.permission_valid(u)
+    if valid:
+        p.delete()
+        return redirect(url_for('index.index'))
+    else:
+        abort(404)
+

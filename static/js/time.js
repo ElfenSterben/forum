@@ -14,14 +14,14 @@ var formatTime = function(current_time, old_time){
                 formattedTime = new Date(old_time * 1000).toLocaleString()
             }
         }
-        else if(hours != 0){
+        else if(hours > 0){
             formattedTime = hours + "小时前"
         }
-        else if(minutes != 0){
+        else if(minutes > 0){
             formattedTime = minutes + "分钟前"
         }
         else{
-            formattedTime = seconds + "刚刚"
+            formattedTime = "刚刚"
         }
         return formattedTime
     }

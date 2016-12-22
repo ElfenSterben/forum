@@ -14,8 +14,7 @@ def info_view(username):
         'check_user': user,
         'user': u
     }
-    data_list.update(data)
-    return render_template('user_info.html', **data_list)
+    return render_template('user_info.html', **data)
 
 
 @main.route('/setting')
@@ -24,5 +23,5 @@ def setting_view():
     data = {
         'user': u
     }
-    data_list.update(data)
-    return render_template('user_setting.html', **data_list)
+    return render_template('user_setting.html', **data)
+

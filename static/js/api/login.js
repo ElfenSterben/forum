@@ -1,9 +1,11 @@
 api.login = function(form, callback){
     var url = '/api/login'
-    api.post(url, form, callback)
+    var data = JSON.stringify(form)
+    api.post(url, data, callback)
 }
 
 api.register = function(form, callback){
     var url = '/api/register'
-    api.post(url, form, callback)
+    var data = JSON.stringify(form)
+    api.post(url, data, callback)
 }

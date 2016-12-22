@@ -1,4 +1,5 @@
 api.postAdd = function(form, callback){
     var url = '/api/post/add'
-    api.post(url, form, callback)
+    var data = JSON.stringify(form)
+    api.post(url, data, callback)
 }

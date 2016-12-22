@@ -1,9 +1,16 @@
-api.setInfo = function(form, callback){
+api.setInfo = function(data, callback){
     var url = '/api/user/change/info'
-    api.post(url, form, callback)
+    var data = JSON.stringify(form)
+    api.post(url, data, callback)
 }
 
 api.changePassword = function(form, callback){
     var url = '/api/user/change/password'
-    api.post(url, form, callback)
+    var data = JSON.stringify(form)
+    api.post(url, data, callback)
+}
+
+api.uploadAvatar = function(data, callback){
+    var url = '/api/user/upload/avatar'
+    api.post(url, data, callback)
 }

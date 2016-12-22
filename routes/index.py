@@ -9,8 +9,7 @@ main = Blueprint('index', __name__)
 @main.route('/')
 def index():
     data = get_page_data(Post)
-    data_list.update(data)
-    return render_template('index.html', **data_list)
+    return render_template('index.html', **data)
 
 @main.route('/<string:node_name>')
 def node_index(node_name):
@@ -19,8 +18,7 @@ def node_index(node_name):
         return redirect(url_for('index.index'))
 
     data = get_page_data(Post, selected_node)
-    data_list.update(data)
-    return render_template('index.html', **data_list)
+    return render_template('index.html', **data)
 
 def get_page_data(Model, node=None):
 

@@ -3,7 +3,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_wtf.csrf import CsrfProtect
 
-from models import db
+from models import db, timestamp
 from models.Node import Node
 from models.Post import Post
 from models.User import User
@@ -11,7 +11,8 @@ from models.User import User
 from routes.index import main as routes_index
 from routes.post import main as routes_post
 from routes.node import main as routes_node
-from routes.api import main as routes_api
+from routes.api import  main as routes_api
+from routes.api import *
 from routes.login import main as routes_login
 from routes.logout import main as routes_logout
 from routes.user import main as routes_user
@@ -19,6 +20,16 @@ from routes.user import main as routes_user
 app = Flask(__name__)
 manager = Manager(app)
 csrf = CsrfProtect()
+hostname = 'kaede'
+
+
+@app.context_processor
+def create_base_data():
+    data = {
+        'hostname': hostname,
+        'current_time': timestamp(),
+    }
+    return data
 
 def register_routes(app):
     app.register_blueprint(routes_index)
@@ -34,6 +45,8 @@ def configure_app():
     db.init_app(app)
     csrf.init_app(app)
     register_routes(app)
+    configure_uploads(app, (avatar,))
+
 
 def configured_app():
     configure_app()
