@@ -68,6 +68,7 @@ def delete(post_id):
 
     valid = p.permission_valid(u)
     if valid:
+        p.comments.delete()
         p.delete()
         return redirect(url_for('index.index'))
     else:

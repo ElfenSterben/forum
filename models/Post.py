@@ -25,7 +25,7 @@ class Post(Model, db.Model):
 
     def update(self, form, r):
         message = {}
-        form_valid = self.content_valid(form, message)
+        form_valid = self.form_valid(form, message)
         r['success'] = form_valid
         if form_valid:
             self.edit_time = timestamp()
@@ -38,7 +38,7 @@ class Post(Model, db.Model):
     @classmethod
     def add(cls, form, r):
         message = {}
-        valid = cls.content_valid(form, message)
+        valid = cls.form_valid(form, message)
         data = {}
         r['success'] = valid
         if valid:
@@ -50,7 +50,7 @@ class Post(Model, db.Model):
             r['message'] = message
 
     @classmethod
-    def content_valid(cls, form, message):
+    def form_valid(cls, form, message):
         n = node.query.get(form.get('node_id'))
         valid_node_exist = n is not None
         valid_title_len = 30 >= len(form.get('title', '')) >= 2

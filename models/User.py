@@ -23,6 +23,7 @@ class User(Model, db.Model):
     avatar = db.Column(db.String(200), default='/static/avatar/default_avatar.gif')
     posts = db.relationship('Post', lazy='dynamic', backref='user')
     comments = db.relationship('Comment', lazy='dynamic', backref='user')
+    version = db.Column(db.Integer, default=0.0)
 
     def __init__(self, form):
         super(User, self).__init__()
@@ -48,7 +49,6 @@ class User(Model, db.Model):
             message['.login-message'] = '用户名或密码错误'
         else:
             session['user_id'] = u.id
-
         return not valid
 
     @classmethod

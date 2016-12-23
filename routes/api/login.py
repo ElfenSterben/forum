@@ -4,6 +4,7 @@ from models.User import User
 from models.utils import log
 
 @main.route('/login', methods=['post'])
+@csrf.exempt
 def login():
     r = {}
     u_json = request.get_json()

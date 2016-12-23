@@ -21,10 +21,25 @@
     </div>
     <div class="form center">
         <form action="/api/upload/avatar" method="post" enctype="multipart/form-data">
-            <img class="img-big" src="{{ user.avatar }}">
-            <input type="file" name="photo" required>
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-set-avatar" name="button">上传头像</button>
+            <div class="jcrop">
+                <div class="jcrop-selected-img float-left">
+                    <img class="selected-img" src="{{ user.avatar }}">
+                </div>
+                <div class="img-preview float-right">
+                    <img class="img-preview-big img-big" src="{{ user.avatar }}">
+                    <img class="img-preview-middle img-middle" src="{{ user.avatar }}">
+                </div>
+            </div>
+            <div class="action">
+                <input class="file-input" type="file" name="photo" required>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+                {% endwith %}
+                <button class="btn btn-set-avatar" name="button">上传头像</button>
+            </div>
         </form>
     </div>
 </div>
@@ -49,7 +64,7 @@
                 </td>
                 <td>
                     <input class="email" type="email" required value="{{user.email}}">
-                    <small><p class="email-message"></p></small>
+                    <small><p class="email-message message"></p></small>
                 </td>
             </tr>
         </table>

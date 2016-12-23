@@ -1,4 +1,4 @@
-api.setInfo = function(data, callback){
+api.setInfo = function(form, callback){
     var url = '/api/user/change/info'
     var data = JSON.stringify(form)
     api.post(url, data, callback)

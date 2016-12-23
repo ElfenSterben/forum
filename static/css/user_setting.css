@@ -22,3 +22,14 @@ td{
 .box-header{
     margin-bottom: 10px;
 }
+.selected-img{
+    width: 100px;
+    vertical-align: middle;
+}
+.jcrop-selected-img {
+    overflow: hidden;
+    display: table-cell;
+    line-height:200px;
+    width: 200px;
+    height: 200px;
+}

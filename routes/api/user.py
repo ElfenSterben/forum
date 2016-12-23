@@ -28,7 +28,13 @@ def update_password():
 def upload_avatar():
     u = current_user()
     if 'photo' in request.files:
-        filename = avatar.save(request.files['photo'])
-        u.avatar = '/static/avatar/' + filename
+        folder_name = str(uuid3(NAMESPACE_DNS, str(u.id) + u.username)).replace('-','')
+        print(request.files['photo'])
+        print(avatar.get_basename(request.files['photo'].filename))
+        filename = avatar.save(request.files['photo'],folder=folder_name, name='avatar.')
+        print(avatar.url(filename))
+        u.avatar = avatar.url(filename)
         u.save()
+
+            # flash('请上传图片文件', 'error')
     return redirect(url_for('user.setting_view'))

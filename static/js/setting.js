@@ -2,9 +2,14 @@ var inputChange = function(e){
     var input = e.target
     var td = input.closest('td')
     var p_message = $(td).find('.message').first()
-    p_message.removeClass('error')
+    console.log(p_message)
+    p_message.remove()
 }
 
+var fileChange = function(e){
+    var input = e.target
+    $('.selected-img').attr('src', window.URL.createObjectURL(input.files[0]))
+}
 
 var btnSetInfo = function(e){
     var btn = e.target
@@ -61,9 +66,10 @@ var btnChangePassword = function(e){
 }
 
 var bindEvents = function(){
+    $('input').on('input', inputChange)
+    $('.file-input').on('change', fileChange)
     $('.btn-set-info').on('click', btnSetInfo)
     $('.btn-change-password').on('click', btnChangePassword)
-    $('input').on('input', inputChange)
 }
 
 var __main = function(){

@@ -9,16 +9,12 @@ from flask import url_for
 from flask import abort
 from models.User import current_user
 from functools import wraps
-from hashlib import md5
-from flask_uploads import (
-    configure_uploads,
-    UploadSet,
-    patch_request_class,
-    IMAGES
-)
+from models.plugin import *
+from uuid import uuid3, NAMESPACE_DNS
+from flask import flash
 
 
-avatar = UploadSet('photos', IMAGES)
+
 
 main = Blueprint('api', __name__)
 
