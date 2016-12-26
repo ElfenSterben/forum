@@ -16,14 +16,12 @@ def post_add():
 @user_required
 def post_update(post_id):
     r = {}
-
-    u = current_user()
     p = Post.query.get(post_id)
 
     if p is None:
         r['success'] = False
         r['message'] = '文章不存在'
-    elif not p.permission_valid(u):
+    elif not p.permission_valid(g.user):
         r['success'] = False
         r['message'] = '不是你的文章'
     else:

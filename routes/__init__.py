@@ -8,9 +8,8 @@ from flask import session
 from flask import url_for
 from flask import abort
 from flask import flash
+from flask import g
 
-
-from models.User import current_user
 from .api import admin_required
 from .api import user_required
 

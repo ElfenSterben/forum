@@ -8,17 +8,14 @@ main = Blueprint('post', __name__)
 @main.route('/new')
 @user_required
 def new():
-    u = current_user()
     node_list = Node.query.filter_by(hidden=False)
     data = {
-        'user': u,
         'node_list': node_list
     }
     return render_template('add_post.html', **data)
 
 @main.route('/<int:post_id>')
 def view(post_id):
-    u = current_user()
     p = Post.query.get(post_id)
     if p is None:
         abort(404)
@@ -27,13 +24,13 @@ def view(post_id):
     if not page.isdigit():
         page = '1'
     page = int(page)
-    pre_page = current_app.config.get('COMMENT_PRE_PAGE', 20)
-    paginate = p.comments.paginate(page, pre_page, False)
-    post_comments = paginate.items
+    comment_pre_page = current_app.config.get('COMMENT_PRE_PAGE', 15)
+    reply_pre_page = current_app.config.get('REPLY_PRE_PAGE', 15)
+    comment_paginate = p.comments.paginate(page, comment_pre_page, False)
+    post_comments = comment_paginate.items
     data = {
         'post': p,
-        'user': u,
-        'paginate': paginate,
+        'comment_paginate': comment_paginate,
         'post_comments': post_comments,
     }
     return render_template('post.html', **data)
@@ -41,7 +38,6 @@ def view(post_id):
 @main.route('/edit/<int:post_id>')
 @user_required
 def edit(post_id):
-    u = current_user()
     p = Post.query.get(post_id)
     if p is None:
         abort(404)
@@ -52,7 +48,6 @@ def edit(post_id):
         data = {
             'node_list': node_list,
             'post': p,
-            'user': u
         }
         return render_template('edit_post.html', **data)
     else:
@@ -61,16 +56,13 @@ def edit(post_id):
 @main.route('/delete/<int:post_id>')
 @user_required
 def delete(post_id):
-    u = current_user()
     p = Post.query.get(post_id)
     if p is None:
         abort(404)
-
-    valid = p.permission_valid(u)
+    valid = p.permission_valid(g.user)
     if valid:
         p.comments.delete()
         p.delete()
         return redirect(url_for('index.index'))
-    else:
-        abort(404)
+    abort(404)
 

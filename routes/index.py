@@ -1,7 +1,6 @@
 from . import *
 from models.Post import Post
 from models.Node import Node
-from functools import wraps
 from flask import current_app
 
 main = Blueprint('index', __name__)
@@ -34,12 +33,11 @@ def get_page_data(Model, node=None):
 
     paginate = query.order_by(Model.created_time.desc()).paginate(page, pre_page, False)
     post_list = paginate.items
-    u = current_user()
+    print(g.__dict__)
     node_list = Node.query.all()
     data = {
         'post_list': post_list,
         'paginate': paginate,
-        'user': u,
         'node_list': node_list,
         'selected_node': node,
     }

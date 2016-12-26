@@ -1,6 +1,7 @@
-from .User import User, current_user
+from .User import User
 from .Node import Node as node
 from . import *
+from flask import g
 
 
 class Post(Model, db.Model):
@@ -18,7 +19,7 @@ class Post(Model, db.Model):
     def __init__(self, form):
         self.created_time = timestamp()
         self.edited_time = timestamp()
-        self.user = current_user()
+        self.user = g.user
         self.title = form.get('title', '')
         self.content = form.get('content', '')
         self.node_id = form.get('node_id')

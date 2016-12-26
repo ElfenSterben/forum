@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, g, session
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from models import db, timestamp
+from models.User import User
 from models.plugin import *
 from routes.api import  main as routes_api
 from routes.index import main as routes_index
@@ -14,13 +15,21 @@ from routes.user import main as routes_user
 
 app = Flask(__name__)
 manager = Manager(app)
-
 hostname = 'kaede'
 
+@app.before_request
+def current_user():
+    u_id = session.get('user_id')
+    if u_id is not None:
+        user =  User.query.get(u_id)
+    else:
+        user = None
+    g.user = user
 
 @app.context_processor
 def create_base_data():
     data = {
+        'user': g.user,
         'hostname': hostname,
         'current_time': timestamp(),
     }

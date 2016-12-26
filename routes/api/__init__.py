@@ -1,27 +1,20 @@
-from flask import Blueprint
-from flask import jsonify
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import send_from_directory
-from flask import session
-from flask import url_for
-from flask import abort
-from models.User import current_user
 from functools import wraps
+from .. import *
 from models.plugin import *
 from uuid import uuid3, NAMESPACE_DNS
-from flask import flash
 
-
-
+from flask import Blueprint
+from flask import abort
+from flask import g
+from flask import redirect
+from flask import url_for
 
 main = Blueprint('api', __name__)
 
 def admin_required(f):
     @wraps(f)
     def function(*args, **kwargs):
-        u = current_user()
+        u = g.user
         if u is None or u.id != 1:
             abort(404)
         return f(*args, **kwargs)
@@ -30,7 +23,7 @@ def admin_required(f):
 def user_required(f):
     @wraps(f)
     def function(*args, **kwargs):
-        u = current_user()
+        u = g.user
         if u is None:
             return redirect(url_for('login.login_view'))
         else:

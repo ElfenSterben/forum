@@ -2,13 +2,6 @@ from . import timestamp
 from . import Model, db
 from flask import session
 
-
-def current_user():
-    u_id = session.get('user_id')
-    if u_id is not None:
-        return User.query.get(u_id)
-    return None
-
 valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 email_valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@.-'
 
@@ -23,6 +16,8 @@ class User(Model, db.Model):
     avatar = db.Column(db.String(200), default='/static/avatar/default_avatar.gif')
     posts = db.relationship('Post', lazy='dynamic', backref='user')
     comments = db.relationship('Comment', lazy='dynamic', backref='user')
+    replies = db.relationship('Reply', lazy='dynamic', backref='reply_user')
+    replied = db.relationship('Reply', lazy='dynamic', backref='replied_user')
     version = db.Column(db.Integer, default=0.0)
 
     def __init__(self, form):
