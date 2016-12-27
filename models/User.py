@@ -16,8 +16,8 @@ class User(Model, db.Model):
     avatar = db.Column(db.String(200), default='/static/avatar/default_avatar.gif')
     posts = db.relationship('Post', lazy='dynamic', backref='user')
     comments = db.relationship('Comment', lazy='dynamic', backref='user')
-    replies = db.relationship('Reply', lazy='dynamic', backref='reply_user')
-    replied = db.relationship('Reply', lazy='dynamic', backref='replied_user')
+    sends = db.relationship('Reply', lazy='dynamic', backref='sender', foreign_keys='Reply.sender_id')
+    receives = db.relationship('Reply', lazy='dynamic', backref='receiver', foreign_keys='Reply.receiver_id')
     version = db.Column(db.Integer, default=0.0)
 
     def __init__(self, form):

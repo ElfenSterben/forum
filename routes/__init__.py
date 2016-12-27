@@ -9,6 +9,7 @@ from flask import url_for
 from flask import abort
 from flask import flash
 from flask import g
+from flask import current_app
 
 from .api import admin_required
 from .api import user_required

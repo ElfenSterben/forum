@@ -19,7 +19,7 @@
     <div class="box-container">
         <div class="post-header inner-box">
             <div class="author-avatar float-right">
-                <a href="{{url_for('user.info_view',username=user.username)}}">
+                <a href="{{url_for('user.info_view',username=post.user.username)}}">
                     <img class="img-big" src="{{post.user.avatar}}" alt="{{post.user.name}}" />
                 </a>
             </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="post-info">
                 <small>
-                    <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{post.user.username}}</a>
+                    <a class="my-link" href="{{url_for('user.info_view',username=post.user.username)}}">{{post.user.username}}</a>
                     <span>&nbsp;•&nbsp;</span>
                     <time>{{post.created_time}}</time>
                     <span>发布</span>
@@ -60,29 +60,36 @@
         </div>
         <div class="comment-list">
             {% for c in post_comments %}
-            <div class="comment-item inner-box clearfix">
-                <div class="comment-user-avatar float-left">
-                    <img class="img-middle" src="{{c.user.avatar}}" alt="" />
-                </div>
-                <div class="comment-item-right float-left">
-                    <div class="comment-user-name">
-                        <a class="my-link" href="{{url_for('user.info_view',username=user.username)}}">{{c.user.username}}</a>
-                        <time>{{c.created_time}}</time>
+            <div class="comment-item inner-box" data-commentid="{{ c.id }}">
+                <div class="comment-body clearfix">
+                    <div class="comment-user-avatar float-left">
+                        <img class="img-middle" src="{{c.user.avatar}}" alt="" />
                     </div>
-                    <div class="comment-comment">
-                        <span>{{c.content}}</span>
+                    <div class="comment-item-right float-left">
+                        <div class="comment-user-name">
+                            <a class="my-link" href="{{url_for('user.info_view',username=c.user.username)}}">{{c.user.username}}</a>
+                            <time>{{c.created_time}}</time>
+                        </div>
+                        <div class="comment-comment">
+                            <span>{{c.content}}</span>
+                        </div>
                     </div>
                 </div>
+                <div class="comment-action clearfix">
+                    <p class="reply-view-message"></p>
+                    <a class="my-link btn-reply-view not-view float-right">展开回复</a>
+                </div>
+                <div class="reply-view"></div>
             </div>
             {% endfor %}
         </div>
         <div class="div-pages">
             <div class="center">
-                {% if paginate.has_prev %}
+                {% if comment_paginate.has_prev %}
                 <a class="page_button" href="{{ url_for('index.index', page=paginate.prev_num) }}">上一页</a>
                 {% endif %}
-                {% for n in paginate.iter_pages(1,2,2,1)%}
-                {% if n == paginate.page %}
+                {% for n in comment_paginate.iter_pages(1,2,2,1)%}
+                {% if n == comment_paginate.page %}
                     <a class="page_num page_selected" href="#">{{ n }}</a>
                 {% else %}
                     {% if n is none%}
@@ -92,7 +99,7 @@
                     {% endif %}
                 {% endif %}
                 {% endfor %}
-                {% if paginate.has_next %}
+                {% if comment_paginate.has_next %}
                 <a class="page_button" href="{{ url_for('index.index', page=paginate.next_num) }}">下一页</a>
                 {% endif %}
             </div>
@@ -100,7 +107,7 @@
     </div>
     <div class="box-comment-input">
         {% if user is none%}
-            <span>请<a class="btn" href="/login">登录</a>后再回复</span>
+            <span>请<a class="btn" href="/login">登录</a>后再评论</span>
         {% else %}
         <div class="comment-input-header inner-box clearfix">
             <a class="float-right" href="#top">↑回到顶部</a>
@@ -111,7 +118,7 @@
         <div class="comment-input-body inner-box">
             <textarea class="input-comment" data-postid="{{post.id}}"></textarea>
             <p class="comment-message message"> <p>
-            <button class="btn btn-new-comment" type="button">回复</button>
+            <button class="btn btn-new-comment" type="button">评论</button>
         </div>
         <div class="comment-input-footer inner-box clearfix">
             <a class="my-link float-right" href="/">←{{hostname}}</a>

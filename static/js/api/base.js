@@ -13,7 +13,7 @@ api._ajax = function(url, method, data, contentType, callback){
         error: function(err){
             var r = {
                 'success': false,
-                'message': '网络错误'
+                'message': {'.message':'网络错误'}
             }
             callback(r)
         }
@@ -30,8 +30,8 @@ api.post = function(url, data, callback){
     api.ajax(url, 'post', data, callback)
 }
 
-api.get = function(url, callback){
-    api.ajax(url, 'get', '', callback)
+api.get = function(url, data, callback){
+    api.ajax(url, 'get', data, callback)
 }
 
 

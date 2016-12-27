@@ -1,0 +1,53 @@
+<div class="reply-list">
+    {% for r in comment_replies %}
+    <div class="reply-item">
+        <div class="reply-item-left">
+            <div class="reply-sender-avatar">
+                <img class="img-small" src="{{ r.sender.avatar }}">
+            </div>
+            <div class="reply-sender-url">
+                <a href="{{ url_for('user.info_view', username=r.sender.username) }}">{{ r.sender.username }}</a>
+            </div>
+        </div>
+        <div class="reply-item-left">
+            <div class="reply-content">
+                <p>
+                    {% if r.receiver is not none %}
+                    回复&nbsp;<a href="{{url_for('user.info_view', username=r.receiver.username)}}"> {{ r.receiver.username }} </a>:{{r.content.split(':')[1]}}
+                    {% else %}
+                    {{ r.content }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor%}
+</div>
+<div class="div-reply-pages">
+    <div class="center">
+        {% if reply_paginate.has_prev %}
+        <button class="reply-page-button reply-page" data-page="{{ reply_paginate.prev_num }}">上一页</button>
+        {% endif %}
+        {% for n in reply_paginate.iter_pages(1,2,2,1)%}
+        {% if n == reply_paginate.page %}
+            <button class="reply-page-button">{{ n }}</button>
+        {% else %}
+            {% if n is none%}
+            <span class="reply-page-button">...</span>
+            {%else%}
+            <button class="reply-page-button reply-page" data-page="{{ n }}">{{ n }}</button>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if reply_paginate.has_next %}
+        <button class="reply-page-button reply-page" data-page="{{ reply_paginate.next_num }}">下一页</button>
+        {% endif %}
+    </div>
+</div>
+{% if user is not none%}
+<div class="div-reply-input">
+    <textarea class="input-reply" data-commentid="{{ comment.id }}"></textarea>
+    <p class="reply-message message"> <p>
+    <button class="btn btn-new-reply" type="button">我也说一句</button>
+</div>
+{% endif %}

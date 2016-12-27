@@ -1,7 +1,7 @@
 from . import *
 from models.Post import Post
 from models.Node import Node
-from flask import current_app
+
 
 main = Blueprint('post', __name__)
 
@@ -25,7 +25,6 @@ def view(post_id):
         page = '1'
     page = int(page)
     comment_pre_page = current_app.config.get('COMMENT_PRE_PAGE', 15)
-    reply_pre_page = current_app.config.get('REPLY_PRE_PAGE', 15)
     comment_paginate = p.comments.paginate(page, comment_pre_page, False)
     post_comments = comment_paginate.items
     data = {
@@ -42,7 +41,7 @@ def edit(post_id):
     if p is None:
         abort(404)
 
-    valid = p.permission_valid(u)
+    valid = p.permission_valid(g.user)
     node_list = Node.query.filter_by(hidden=False)
     if valid:
         data = {

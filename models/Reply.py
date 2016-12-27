@@ -3,21 +3,22 @@ from flask import g
 from .User import User
 from .Comment import Comment
 
+
 class Reply(Model, db.Model):
     __tablename__ = 'reply'
     id = db.Column(db.Integer, primary_key=True)
     created_time = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('reply_user.id'))
-    comment_id = db.Column(db.Integer, db.Foreignkey('comment.id'))
-    replied_id = db.Column(db.Integer, db.ForeignKey('replied_user.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     content = db.Column(db.String(1000))
     hidden = db.Column(db.Boolean, default=False)
 
     def __init__(self, form):
         self.created_time = timestamp()
-        self.reply_user = g.user
-        self.replied_user = User.query.filter_by(username=form.get('username')).first()
-        self.comment = form.get('comment_id')
+        self.sender = g.user
+        self.receiver = User.query.filter_by(username=form.get('receiver_name')).first()
+        self.comment_id = form.get('comment_id')
         self.content = form.get('content', '')
 
     @classmethod
@@ -27,11 +28,11 @@ class Reply(Model, db.Model):
         data = {}
         r['success'] = valid
         if valid:
-            r = cls(form)
-            r.save()
-            data['reply'] = r.json()
-            data['reply_user'] = r.reply_user.json()
-            data['replied_user'] = r.replied_user.json() if r.replied_user is not None else None
+            reply = cls(form)
+            reply.save()
+            data['reply'] = reply.json()
+            data['sender'] = reply.sender.json()
+            data['receiver'] = reply.receiver.json() if reply.receiver is not None else None
             r['data'] = data
         else:
             r['message'] = message

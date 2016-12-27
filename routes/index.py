@@ -33,7 +33,6 @@ def get_page_data(Model, node=None):
 
     paginate = query.order_by(Model.created_time.desc()).paginate(page, pre_page, False)
     post_list = paginate.items
-    print(g.__dict__)
     node_list = Node.query.all()
     data = {
         'post_list': post_list,
