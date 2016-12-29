@@ -5,21 +5,24 @@
             <div class="reply-sender-avatar">
                 <img class="img-small" src="{{ r.sender.avatar }}">
             </div>
-            <div class="reply-sender-url">
-                <a href="{{ url_for('user.info_view', username=r.sender.username) }}">{{ r.sender.username }}</a>
+            <div class="reply-sender-name">
+                <a class="
+my-link" href="{{ url_for('user.info_view', username=r.sender.username) }}">{{ r.sender.username }}</a>
             </div>
         </div>
-        <div class="reply-item-left">
+        <div class="reply-item-right">
             <div class="reply-content">
                 <p>
                     {% if r.receiver is not none %}
-                    回复&nbsp;<a href="{{url_for('user.info_view', username=r.receiver.username)}}"> {{ r.receiver.username }} </a>:{{r.content.split(':')[1]}}
+                    回复&nbsp;<a class="
+my-link" href="{{url_for('user.info_view', username=r.receiver.username)}}"> {{ r.receiver.username }} </a>:{{r.content.split(':')[1]}}
                     {% else %}
                     {{ r.content }}
                     {% endif %}
                 </p>
             </div>
         </div>
+        <div class="reply-item-foot"><a class="reply-this my-link">回复</a></div>
     </div>
     {% endfor%}
 </div>

@@ -142,11 +142,24 @@ var btnOnNewReply = function(e){
     api.replyAdd(form, response)
 }
 
+var btnOnReplySomeOne = function(e){
+    var btn = e.target
+    var box = $(btn).closest('.reply-view')
+    var item = $(btn).closest('.reply-item')
+    var senderName = $(item).find('.reply-sender-name a').first().text()
+    var input = $(box).find('textarea.input-reply')
+    var text = '回复 ' + senderName + ':'
+    input.val(text)
+    input.focus()
+
+}
+
 var bindEvents = function(){
     $('.btn-new-comment').on('click', btnOnNewComment)
     $('.comment-list').on('click', '.btn-reply-view.not-view', btnOnViewReplies)
     $('.comment-list').on('click', '.reply-page', btnOnViewReplies)
     $('.comment-list').on('click', '.btn-new-reply', btnOnNewReply)
+    $('.reply-view').on('click', '.reply-this', btnOnReplySomeOne)
 }
 
 var __main = function(){
