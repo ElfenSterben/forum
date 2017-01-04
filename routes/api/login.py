@@ -1,7 +1,6 @@
+from models.User import User
 from . import *
 
-from models.User import User
-from models.utils import log
 
 @main.route('/login', methods=['post'])
 @csrf.exempt

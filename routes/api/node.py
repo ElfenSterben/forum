@@ -1,7 +1,6 @@
+from models.Node import Node
 from . import *
 
-from models.Node import Node
-from models.utils import log
 
 @main.route('/node/add', methods=['post'])
 @admin_required

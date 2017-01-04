@@ -1,8 +1,7 @@
+from models.Comment import Comment
+from models.Reply import Reply
 from . import *
 
-from models.Reply import Reply
-from models.Comment import Comment
-from models.utils import log
 
 @main.route('/reply/add', methods=['post'])
 @user_required

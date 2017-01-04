@@ -4,7 +4,6 @@ from flask_script import Manager
 
 from models import db, timestamp
 from models.User import User
-from models.plugin import *
 from routes.api import  main as routes_api
 from routes.index import main as routes_index
 from routes.login import main as routes_login
@@ -12,6 +11,7 @@ from routes.logout import main as routes_logout
 from routes.node import main as routes_node
 from routes.post import main as routes_post
 from routes.user import main as routes_user
+from utils.plugin import *
 
 app = Flask(__name__)
 manager = Manager(app)

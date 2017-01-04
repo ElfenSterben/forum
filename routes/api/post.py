@@ -1,7 +1,6 @@
+from models.Post import Post
 from . import *
 
-from models.Post import Post
-from models.utils import log
 
 @main.route('/post/add', methods=['post'])
 @user_required
@@ -32,16 +31,16 @@ def post_update(post_id):
 
     return jsonify(r)
 
-@main.route('/post/<int:post_id>/vote', methods=['get'])
-@user_required
-def post_vote(post_id):
-    r = {}
-    p = Post.query.get(post_id)
-    if p is None:
-        r['success'] = False
-        r['message']['.vote-message'] = '文章不存在'
-    else:
-        p.vote += 1
-        p.save()
-        r['success'] = True
-    return jsonify(r)
+# @main.route('/post/<int:post_id>/vote', methods=['get'])
+# @user_required
+# def post_vote(post_id):
+#     r = {}
+#     p = Post.query.get(post_id)
+#     if p is None:
+#         r['success'] = False
+#         r['message']['.vote-message'] = '文章不存在'
+#     else:
+#         p.vote += 1
+#         p.save()
+#         r['success'] = True
+#     return jsonify(r)

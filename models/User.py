@@ -18,7 +18,9 @@ class User(Model, db.Model):
     comments = db.relationship('Comment', lazy='dynamic', backref='user')
     sends = db.relationship('Reply', lazy='dynamic', backref='sender', foreign_keys='Reply.sender_id')
     receives = db.relationship('Reply', lazy='dynamic', backref='receiver', foreign_keys='Reply.receiver_id')
-    version = db.Column(db.Integer, default=0.0)
+    subscriptions = db.relationship('Subscription', lazy='dynamic', backref='user')
+    subscription_config = db.relationship('SubscriptionConfig', lazy='dynamic', uselist=False, backref='user')
+    user_notifies = db.relationship('UserNotify', lazy='dynamic', backref='user')
 
     def __init__(self, form):
         super(User, self).__init__()

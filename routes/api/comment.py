@@ -1,7 +1,6 @@
+from models.Comment import Comment
 from . import *
 
-from models.Comment import Comment
-from models.utils import log
 
 @main.route('/comment/add', methods=['post'])
 @user_required

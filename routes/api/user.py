@@ -1,6 +1,5 @@
 from . import *
 
-from models.utils import log
 
 @main.route('/user/change/info', methods=['post'])
 @user_required

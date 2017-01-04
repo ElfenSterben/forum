@@ -1,7 +1,6 @@
 from functools import wraps
+
 from .. import *
-from models.plugin import *
-from uuid import uuid3, NAMESPACE_DNS
 
 main = Blueprint('api', __name__)
 
