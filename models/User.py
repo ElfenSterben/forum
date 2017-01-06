@@ -19,7 +19,7 @@ class User(Model, db.Model):
     sends = db.relationship('Reply', lazy='dynamic', backref='sender', foreign_keys='Reply.sender_id')
     receives = db.relationship('Reply', lazy='dynamic', backref='receiver', foreign_keys='Reply.receiver_id')
     subscriptions = db.relationship('Subscription', lazy='dynamic', backref='user')
-    subscription_config = db.relationship('SubscriptionConfig', lazy='dynamic', uselist=False, backref='user')
+    subscription_config = db.relationship('SubscriptionConfig', lazy='dynamic', backref='user')
     user_notifies = db.relationship('UserNotify', lazy='dynamic', backref='user')
 
     def __init__(self, form):

@@ -6,7 +6,7 @@ class Subscription(Model, db.Model):
     target_id = db.Column(db.Integer)
     target_type = db.Column(db.String(100))
     action = db.Column(db.String(100))
-    user_id = db.Column(db.Integer, db.ForeigenKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_time = db.Column(db.Integer)
 
     def __init__(self, form):

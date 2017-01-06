@@ -26,3 +26,8 @@ class Model(object):
     def hidden(self):
         self.hidden = True
         db.session.commit()
+
+    def _update(self):
+        db.session.merge(self)
+        db.session.commit()
+

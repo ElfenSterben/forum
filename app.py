@@ -1,6 +1,7 @@
 from flask import Flask, g, session
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from sqlalchemy import func
 
 from models import db, timestamp
 from models.User import User
@@ -12,6 +13,8 @@ from routes.node import main as routes_node
 from routes.post import main as routes_post
 from routes.user import main as routes_user
 from utils.plugin import *
+from services.NotifyService import notify_service
+
 
 app = Flask(__name__)
 manager = Manager(app)
@@ -22,16 +25,23 @@ def current_user():
     u_id = session.get('user_id')
     if u_id is not None:
         user =  User.query.get(u_id)
+        uns = notify_service.get_user_notifies(user)
+        notifies_not_read = uns.filter_by(is_read=False).count()
     else:
         user = None
+        notifies_not_read = 0
     g.user = user
+    g.notifies_not_read = notifies_not_read
 
 @app.context_processor
 def create_base_data():
+    user = g.user
+    nnr = g.notifies_not_read
     data = {
-        'user': g.user,
+        'user': user,
         'hostname': hostname,
         'current_time': timestamp(),
+        'not_read_count': nnr,
     }
     return data
 

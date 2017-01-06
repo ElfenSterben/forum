@@ -1,5 +1,7 @@
 from models.Notify import Notify
 from models.UserNotify import UserNotify
+from models.Subscription import Subscription
+from models.SubscriptionConfig import SubscriptionConfig
 from .NotifyConfig import *
 
 class NotifyService(object):
@@ -51,6 +53,58 @@ class NotifyService(object):
                 UserNotify.new(data)
 
     def pull_remind(self, user):
-        subscriptions = user.subscriptions
+        ss = user.subscriptions
+        subscriptions = []
+        for s in ss:
+            if getattr(user.subscription_config, s.action) is True:
+                subscriptions.append(s)
+
+        notifies = []
         for s in subscriptions:
-            n = Notify.query.filter_by(target_id=s.target_id, target_type=s.target_type, action=s.action).filter('created_time>:created_time').params(created_time=s.created_time)
+            n = Notify.query.filter('created_time>:created_time', type=NOTIFY_TYPE.REMIND, target_id=s.target_id, target_type=s.target_type, action=s.action).params(created_time=s.created_time).all()
+            notifies.extend(n)
+        notifies.sort(lambda n: n.created_time)
+
+        for n in notifies:
+            data = {
+                'user_id': user.id,
+                'notify_id': n.id
+            }
+            UserNotify.new(data)
+
+    def subscribe(self, user, target_id, target_type, reason):
+        for a in reason:
+            data = {
+                'target_id': target_id,
+                'target_type': target_type,
+                'action': a,
+                'user_id': user.id,
+            }
+            Subscription(data)
+
+    def cancel_subscription(self, user, target_id, target_type, reason):
+        for a in reason:
+            ss = Subscription.query.filter_by(user_id=user.id, target_id=target_id, target_type=target_type, action=a)
+            ss.delete()
+
+    def get_subscription_config(self, user):
+        return user.subscription_config.json()
+
+    def update_subscription_config(self, user, form):
+        try:
+            sc = user.subscription_config
+            sc.update(form)
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def get_user_notifies(self, user):
+        uns = user.user_notifies.order_by(UserNotify.created_time.desc())
+        return uns
+
+    def read(self, user_notifies):
+        for un in user_notifies:
+            un.is_read = True
+            un._update()
+
