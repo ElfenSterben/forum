@@ -25,6 +25,8 @@ def current_user():
     u_id = session.get('user_id')
     if u_id is not None:
         user =  User.query.get(u_id)
+        notify_service.pull_remind(user)
+        notify_service.pull_announce(user)
         uns = notify_service.get_user_notifies(user)
         notifies_not_read = uns.filter_by(is_read=False).count()
     else:

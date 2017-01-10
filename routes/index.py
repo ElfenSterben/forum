@@ -20,7 +20,6 @@ def node_index(node_name):
     return render_template('index.html', **data)
 
 def get_page_data(Model, node=None):
-
     page = request.args.get('page', '1')
     if not page.isdigit():
         page = '1'

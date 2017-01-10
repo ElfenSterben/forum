@@ -16,7 +16,7 @@ class Notify(Model, db.Model):
         self.content = form.get('content')
         self.type = form.get('type')
         self.target_id = form.get('target_id')
-        self.target_type = form.get('targetType')
+        self.target_type = form.get('target_type')
         self.action = form.get('action')
         self.sender_id = form.get('sender_id')
         self.created_time = timestamp()

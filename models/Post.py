@@ -45,6 +45,7 @@ class Post(Model, db.Model):
         if valid:
             p = cls(form)
             p.save()
+            notify_service.subscribe(p.user, p.id, TARGET_TYPE.POST, REASON_ACTION.CREATE_POST)
             data['url'] = url_for('post.view',post_id=p.id)
             r['data'] = data
         else:

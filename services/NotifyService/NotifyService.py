@@ -40,7 +40,12 @@ class NotifyService(object):
         UserNotify.new(data)
 
     def pull_announce(self, user):
-        last_announce = user.user_notifies.notify.filter_by(type=NOTIFY_TYPE.ANNOUNCE).last()
+        user_notifies = user.user_notifies.order_by(UserNotify.created_time.desc()).all()
+        last_announce = None
+        for un in user_notifies:
+            if un.notify.type==NOTIFY_TYPE.ANNOUNCE:
+                last_announce = un.notify
+
         if last_announce is not None:
             last_time = last_announce.created_time
             announce = Notify.query.filter_by(type=NOTIFY_TYPE.ANNOUNCE)
@@ -61,9 +66,10 @@ class NotifyService(object):
 
         notifies = []
         for s in subscriptions:
-            n = Notify.query.filter('created_time>:created_time', type=NOTIFY_TYPE.REMIND, target_id=s.target_id, target_type=s.target_type, action=s.action).params(created_time=s.created_time).all()
+            print('pull_remind')
+            n = Notify.query.filter(Notify.created_time>s.created_time).filter_by( type=NOTIFY_TYPE.REMIND, target_id=s.target_id, target_type=s.target_type, action=s.action).all()
             notifies.extend(n)
-        notifies.sort(lambda n: n.created_time)
+        notifies.sort(key=lambda n: n.created_time)
 
         for n in notifies:
             data = {
@@ -80,9 +86,9 @@ class NotifyService(object):
                 'action': a,
                 'user_id': user.id,
             }
-            Subscription(data)
+            Subscription.new(data)
 
-    def cancel_subscription(self, user, target_id, target_type, reason):
+    def cancel_subscribe(self, user, target_id, target_type, reason):
         for a in reason:
             ss = Subscription.query.filter_by(user_id=user.id, target_id=target_id, target_type=target_type, action=a)
             ss.delete()

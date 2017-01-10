@@ -1,5 +1,5 @@
 from . import *
-
+from uuid import uuid3, NAMESPACE_DNS
 
 @main.route('/user/change/info', methods=['post'])
 @user_required

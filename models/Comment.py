@@ -33,6 +33,8 @@ class Comment(Model, db.Model):
             data['comment'] = c.json()
             data['user'] = c.user.json()
             r['data'] = data
+            notify_content = c.user.username + '评论了你的文章' + c.post.title
+            notify_service.create_remind(c.post_id, TARGET_TYPE.POST, ACTION.COMMENT, c.user_id, notify_content)
         else:
             r['message'] = message
 

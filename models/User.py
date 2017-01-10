@@ -1,6 +1,7 @@
 from . import timestamp
 from . import Model, db
 from flask import session
+from .SubscriptionConfig import SubscriptionConfig
 
 valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 email_valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@.-'
@@ -14,12 +15,13 @@ class User(Model, db.Model):
     password = db.Column(db.String(20))
     email = db.Column(db.String(50), unique=True)
     avatar = db.Column(db.String(200), default='/static/avatar/default_avatar.gif')
+    subscription_config = db.relationship('SubscriptionConfig', uselist=False, backref='user')
+
     posts = db.relationship('Post', lazy='dynamic', backref='user')
     comments = db.relationship('Comment', lazy='dynamic', backref='user')
     sends = db.relationship('Reply', lazy='dynamic', backref='sender', foreign_keys='Reply.sender_id')
     receives = db.relationship('Reply', lazy='dynamic', backref='receiver', foreign_keys='Reply.receiver_id')
     subscriptions = db.relationship('Subscription', lazy='dynamic', backref='user')
-    subscription_config = db.relationship('SubscriptionConfig', lazy='dynamic', backref='user')
     user_notifies = db.relationship('UserNotify', lazy='dynamic', backref='user')
 
     def __init__(self, form):
@@ -28,6 +30,7 @@ class User(Model, db.Model):
         self.nickname = self.username
         self.password = form.get('password')
         self.email = form.get('email')
+
         self.created_time = timestamp()
 
     @classmethod
@@ -55,7 +58,10 @@ class User(Model, db.Model):
         r['success'] = valid
         if valid:
             u = cls(form)
+            s = SubscriptionConfig()
             u.save()
+            u.subscription_config = s
+            s.save()
             u = cls.query.filter_by(username=u.username).first()
             session['user_id'] = u.id
         else:

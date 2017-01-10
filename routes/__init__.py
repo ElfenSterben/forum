@@ -11,6 +11,7 @@ from flask import flash
 from flask import g
 from flask import current_app
 from utils.plugin import *
+from services.NotifyService import *
 
 from .api import admin_required
 from .api import user_required

@@ -31,3 +31,5 @@ class Model(object):
         db.session.merge(self)
         db.session.commit()
 
+from services.NotifyService import notify_service
+from services.NotifyService.NotifyConfig import *

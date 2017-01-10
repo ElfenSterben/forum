@@ -7,17 +7,6 @@ class SubscriptionConfig(Model, db.Model):
     comment = db.Column(db.Boolean, default=True)
     reply = db.Column(db.Boolean, default=True)
 
-    def __init__(self, form):
-        self.user_id = form.get('user_id')
-        self.comment = form.get('comment', True)
-        self.reply = form.get('reply', True)
-
-    @classmethod
-    def new(cls, form):
-        sc = cls(form)
-        sc.save()
-        return sc
-
     def update(self, form):
         self.comment = form.get('comment', True)
         self.reply = form.get('reply', True)
