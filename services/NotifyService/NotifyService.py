@@ -40,22 +40,28 @@ class NotifyService(object):
         UserNotify.new(data)
 
     def pull_announce(self, user):
-        user_notifies = user.user_notifies.order_by(UserNotify.created_time.desc()).all()
-        last_announce = None
-        for un in user_notifies:
-            if un.notify.type==NOTIFY_TYPE.ANNOUNCE:
-                last_announce = un.notify
+        last_announce = user.user_notifies.join(Notify).filter_by(
+            type=NOTIFY_TYPE.ANNOUNCE
+        ).order_by(
+            Notify.created_time.desc()
+        ).first()
 
+        last_time = 0
         if last_announce is not None:
             last_time = last_announce.created_time
-            announce = Notify.query.filter_by(type=NOTIFY_TYPE.ANNOUNCE)
-            ns = announce.filter('created_time>:created_time').params(created_time=last_time).all()
-            for n in ns:
-                data = {
-                    'user_id': user.id,
-                    'notify_id': n.id
-                }
-                UserNotify.new(data)
+
+        ns = Notify.query.filter_by(
+            type=NOTIFY_TYPE.ANNOUNCE
+        ).filter(
+            Notify.created_time>last_time
+        ).all()
+
+        for n in ns:
+            data = {
+                'user_id': user.id,
+                'notify_id': n.id
+            }
+            UserNotify.new(data)
 
     def pull_remind(self, user):
         ss = user.subscriptions
@@ -64,10 +70,27 @@ class NotifyService(object):
             if getattr(user.subscription_config, s.action) is True:
                 subscriptions.append(s)
 
+        last_user_notify = user.user_notifies.join(Notify).filter_by(
+            type=NOTIFY_TYPE.REMIND
+        ).order_by(
+            Notify.created_time.desc()
+        ).first()
+
+        last_time = 0
+        if last_user_notify is not None:
+            last_time = last_user_notify.notify.created_time
+
         notifies = []
         for s in subscriptions:
-            print('pull_remind')
-            n = Notify.query.filter(Notify.created_time>s.created_time).filter_by( type=NOTIFY_TYPE.REMIND, target_id=s.target_id, target_type=s.target_type, action=s.action).all()
+            _time = last_time if last_time > s.created_time else s.created_time
+            n = Notify.query.filter(
+                Notify.created_time>_time
+            ).filter_by(
+                type=NOTIFY_TYPE.REMIND,
+                target_id=s.target_id,
+                target_type=s.target_type,
+                action=s.action
+            ).all()
             notifies.extend(n)
         notifies.sort(key=lambda n: n.created_time)
 
