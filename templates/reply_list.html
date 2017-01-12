@@ -1,6 +1,6 @@
 <div class="reply-list">
     {% for r in comment_replies %}
-    <div class="reply-item">
+    <div class="reply-item" data-replyid="{{r.id}}">
         <div class="reply-item-left">
             <div class="reply-sender-avatar">
                 <img class="img-small" src="{{ r.sender.avatar }}">

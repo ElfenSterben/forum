@@ -32,29 +32,21 @@ class NotifyService(object):
             'type': NOTIFY_TYPE.MESSAGE,
         }
         n = Notify.new(data)
+
         data = {
             'user_id': receiver_id,
             'notify_id': n.id,
         }
-
         UserNotify.new(data)
 
     def pull_announce(self, user):
-        last_announce = user.user_notifies.join(Notify).filter_by(
-            type=NOTIFY_TYPE.ANNOUNCE
-        ).order_by(
-            Notify.created_time.desc()
-        ).first()
+        last_announce = user.last_user_notify(NOTIFY_TYPE.ANNOUNCE)
+        last_time = last_announce.notify.created_time if last_announce is not None else 0
 
-        last_time = 0
-        if last_announce is not None:
-            last_time = last_announce.created_time
-
-        ns = Notify.query.filter_by(
-            type=NOTIFY_TYPE.ANNOUNCE
-        ).filter(
-            Notify.created_time>last_time
-        ).all()
+        query = {
+            'type': NOTIFY_TYPE.ANNOUNCE
+        }
+        ns = Notify.news(last_time, query)
 
         for n in ns:
             data = {
@@ -64,34 +56,22 @@ class NotifyService(object):
             UserNotify.new(data)
 
     def pull_remind(self, user):
-        ss = user.subscriptions
-        subscriptions = []
-        for s in ss:
-            if getattr(user.subscription_config, s.action) is True:
-                subscriptions.append(s)
-
-        last_user_notify = user.user_notifies.join(Notify).filter_by(
-            type=NOTIFY_TYPE.REMIND
-        ).order_by(
-            Notify.created_time.desc()
-        ).first()
-
-        last_time = 0
-        if last_user_notify is not None:
-            last_time = last_user_notify.notify.created_time
+        subscriptions = user.get_subscriptions()
+        last_remind = user.last_user_notify(NOTIFY_TYPE.REMIND)
+        last_time = last_remind.notify.created_time if last_remind is not None else 0
 
         notifies = []
         for s in subscriptions:
             _time = last_time if last_time > s.created_time else s.created_time
-            n = Notify.query.filter(
-                Notify.created_time>_time
-            ).filter_by(
-                type=NOTIFY_TYPE.REMIND,
-                target_id=s.target_id,
-                target_type=s.target_type,
-                action=s.action
-            ).all()
+            query ={
+                'type' : NOTIFY_TYPE.REMIND,
+                'target_id':s.target_id,
+                'target_type' : s.target_type,
+                'action' : s.action
+            }
+            n = Notify.news(_time, query)
             notifies.extend(n)
+
         notifies.sort(key=lambda n: n.created_time)
 
         for n in notifies:
@@ -113,7 +93,7 @@ class NotifyService(object):
 
     def cancel_subscribe(self, user, target_id, target_type, reason):
         for a in reason:
-            ss = Subscription.query.filter_by(user_id=user.id, target_id=target_id, target_type=target_type, action=a)
+            ss = user.subscriptions.filter_by(target_id=target_id, target_type=target_type, action=a)
             ss.delete()
 
     def get_subscription_config(self, user):
@@ -136,4 +116,3 @@ class NotifyService(object):
         for un in user_notifies:
             un.is_read = True
             un._update()
-

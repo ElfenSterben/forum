@@ -33,8 +33,21 @@ class Comment(Model, db.Model):
             data['comment'] = c.json()
             data['user'] = c.user.json()
             r['data'] = data
-            notify_content = c.user.username + '评论了你的文章' + c.post.title
-            notify_service.create_remind(c.post_id, TARGET_TYPE.POST, ACTION.COMMENT, c.user_id, notify_content)
+            notify = {
+                'target_id': c.post_id,
+                'target_type': TARGET_TYPE.POST,
+                'action': ACTION.COMMENT,
+                'sender_id': c.user_id,
+                'content': c.user.username + '评论了你的文章' + c.post.title,
+            }
+            notify_service.create_remind(**notify)
+            subscribe = {
+                'user': c.user,
+                'target_id': c.id,
+                'target_type': TARGET_TYPE.COMMENT,
+                'reason': REASON_ACTION.COMMENT_POST
+            }
+            notify_service.subscribe(**subscribe)
         else:
             r['message'] = message
 

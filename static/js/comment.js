@@ -30,7 +30,7 @@ var replyTemplate = function(d){
     r.content = r.content.replace(/</g, '&lt;')
     r.content = r.content.replace(/>/g, '&gt;')
     var t = `
-    <div class="reply-item">
+    <div class="reply-item" data-id="${r.id}">
         <div class="reply-item-left">
             <div class="reply-sender-avatar">
                 <img class="img-small" src="${s.avatar}">
@@ -112,6 +112,9 @@ var btnOnViewReplies = function(e){
 var btnOnNewReply = function(e){
     var btn = e.target
     var box = $(btn).closest('.reply-view')
+    var div_input = $(btn).closest('.div-reply-input')
+    console.log(div_input)
+    var reply_id = $(div_input).data('replyid')
     var message = $('.reply-message').first()
     var list = $('.reply-list').first()
     var content = $('.input-reply').first().val()
@@ -119,7 +122,9 @@ var btnOnNewReply = function(e){
     if(content.startsWith('回复') && content.includes(':')){
         var receiver_name = content.split('回复 ')[1].split(':')[0]
     }
+    console.log(reply_id)
     var form = {
+        'reply_id': reply_id,
         'comment_id': comment_id,
         'content': content,
         'receiver_name': receiver_name,
@@ -148,7 +153,10 @@ var btnOnReplySomeOne = function(e){
     var item = $(btn).closest('.reply-item')
     var senderName = $(item).find('.reply-sender-name a').first().text()
     var input = $(box).find('textarea.input-reply')
+    var reply_id = $(item).data('replyid')
+    console.log(reply_id)
     var text = '回复 ' + senderName + ':'
+    $(box).find('.div-reply-input').data('replyid', reply_id)
     input.val(text)
     input.focus()
 

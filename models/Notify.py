@@ -26,3 +26,9 @@ class Notify(Model, db.Model):
         n = cls(form)
         n.save()
         return n
+
+    @classmethod
+    def news(cls, start_time, query):
+        return cls.query.filter(
+            Notify.created_time>start_time
+        ).filter_by(**query).all()

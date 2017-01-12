@@ -1,7 +1,7 @@
-from . import timestamp
-from . import Model, db
 from flask import session
 from .SubscriptionConfig import SubscriptionConfig
+from . import *
+from .Notify import Notify
 
 valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 email_valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@.-'
@@ -175,6 +175,21 @@ class User(Model, db.Model):
             self.password = form.get('new-password')
         else:
             r['message'] = message
+
+    def last_user_notify(self, type):
+        return self.user_notifies.join(Notify).filter_by(
+            type=type
+        ).order_by(
+            Notify.created_time.desc()
+        ).first()
+
+    def get_subscriptions(self):
+        ss = self.subscriptions
+        subscriptions = []
+        for s in ss:
+            if getattr(self.subscription_config, s.action) is True:
+                subscriptions.append(s)
+        return subscriptions
 
     def json(self):
         json = {

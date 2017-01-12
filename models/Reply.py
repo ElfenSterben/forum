@@ -34,6 +34,37 @@ class Reply(Model, db.Model):
             data['sender'] = reply.sender.json()
             data['receiver'] = reply.receiver.json() if reply.receiver is not None else None
             r['data'] = data
+            if reply.receiver is not None:
+                print(form)
+                notify = {
+                    'target_id': form.get('reply_id'),
+                    'target_type': TARGET_TYPE.REPLY,
+                    'action': ACTION.REPLY,
+                    'sender_id': reply.sender_id,
+                    'content': reply.sender.username + '在' + reply.comment.post.title + '回复了你',
+                }
+                subscribe = {
+                    'user': reply.sender,
+                    'target_id': reply.id,
+                    'target_type': TARGET_TYPE.REPLY,
+                    'reason': REASON_ACTION.REPLY_REPLY
+                }
+            else:
+                notify = {
+                    'target_id': reply.comment_id,
+                    'target_type': TARGET_TYPE.COMMENT,
+                    'action': ACTION.REPLY,
+                    'sender_id': reply.sender_id,
+                    'content': reply.sender.username + '在' + reply.comment.post.title + '回复了你',
+                }
+                subscribe = {
+                    'user': reply.sender,
+                    'target_id': reply.id,
+                    'target_type': TARGET_TYPE.REPLY,
+                    'reason': REASON_ACTION.REPLY_COMMENT
+                }
+            notify_service.create_remind(**notify)
+            notify_service.subscribe(**subscribe)
         else:
             r['message'] = message
 
@@ -55,6 +86,7 @@ class Reply(Model, db.Model):
 
     def json(self):
         json = {
+            'id': self.id,
             'content': self.content,
             'created_time': self.created_time,
         }
