@@ -12,6 +12,7 @@ from routes.logout import main as routes_logout
 from routes.node import main as routes_node
 from routes.post import main as routes_post
 from routes.user import main as routes_user
+from routes.notify import main as routes_notify
 from utils.plugin import *
 from services.NotifyService import notify_service
 
@@ -55,6 +56,7 @@ def register_routes(app):
     app.register_blueprint(routes_login, url_prefix='/login')
     app.register_blueprint(routes_logout, url_prefix='/logout')
     app.register_blueprint(routes_user, url_prefix='/user')
+    app.register_blueprint(routes_notify, url_prefix='/notify')
 
 def configure_app():
     app.config.from_object('config')

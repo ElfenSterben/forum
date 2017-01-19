@@ -1,6 +1,11 @@
 
 
 class NOTIFY_TYPE():
+    mapping = {
+        'announce': '系统消息',
+        'remind': '提    醒',
+        'message': '私    信'
+    }
     ANNOUNCE = 'announce'
     REMIND = 'remind'
     MESSAGE = 'message'

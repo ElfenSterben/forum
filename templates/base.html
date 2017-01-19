@@ -36,7 +36,7 @@
                     <a class="nav-item" href="/login">登录/注册</a>
                 {% else %}
                     <a class="nav-item" href="{{url_for('user.info_view',username=user.username)}}">{{user.username}}</a>
-                    <a class="nav-item" href="">消息({{not_read_count}})</a>
+                    <a class="nav-item" href="{{url_for('notify.notify_view',notify_type='announce')}}">消息({{not_read_count}})</a>
                     <a class="nav-item" href="{{url_for('user.setting_view')}}">设置</a>
                     {% if user.id == 1 %}
                     <a class="nav-item" href="/node">节点管理</a>

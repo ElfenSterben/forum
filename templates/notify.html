@@ -1,0 +1,27 @@
+{% extends "base_with_sidebar.html" %}
+
+{% block title %}
+   消息
+{% endblock %}
+
+
+{% block css%}
+{{ super() }}
+{% endblock %}
+
+{% block main %}
+<div class="div-notify-main">
+    <div class='div-notify-left'>
+    {% for t in notify_types %}
+    <a class="{% if t == selected_type %}selected{% endif %}" href="{{url_for('notify.notify_view', notify_type=t)}}">{{ notify_types.get(t) }}</a>
+    {% endfor %}
+    </div>
+    <div class="div-notify-right">
+    {% for un in user_notify_list %}
+        <div>
+            {{un.notify.content}}
+        </div>
+    {% endfor%}
+    </div>
+</div>
+{% endblock %}
