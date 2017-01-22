@@ -1,4 +1,3 @@
 from .NotifyService import NotifyService
-from . import  NotifyConfig
-
+from .NotifyConfig import *
 notify_service = NotifyService()

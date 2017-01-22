@@ -12,8 +12,8 @@
 {% block main %}
 <div class="div-notify-main">
     <div class='div-notify-left'>
-    {% for t in notify_types %}
-    <a class="{% if t == selected_type %}selected{% endif %}" href="{{url_for('notify.notify_view', notify_type=t)}}">{{ notify_types.get(t) }}</a>
+    {% for t in notify_types.list %}
+    <a class="{% if t == selected_type %}selected{% endif %}" href="{{url_for('notify.notify_view', notify_type=t)}}">{{ notify_types.name(t) }}</a>
     {% endfor %}
     </div>
     <div class="div-notify-right">

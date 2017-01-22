@@ -1,6 +1,6 @@
 from . import *
 from models.Notify import Notify
-from services.NotifyService.NotifyConfig import *
+from services.NotifyService import *
 
 main = Blueprint('notify', __name__)
 
@@ -18,6 +18,6 @@ def notify_view(notify_type):
         'user_notify_paginate': paginate,
         'user_notify_list': un_list,
         'selected_type': notify_type,
-        'notify_types': NOTIFY_TYPE.mapping
+        'notify_types': NOTIFY_TYPE
     }
     return render_template('notify.html', **data)
