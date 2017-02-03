@@ -3,14 +3,18 @@
 设置
 {% endblock %}
 
-{% block css %}
-{{ super() }}
-<link rel="stylesheet" href="/static/css/user_setting.css">
-{% endblock %}
+
 
 {% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.js"></script>
 <script src="/static/js/api/setting.js"></script>
 <script src="/static/js/setting.js"></script>
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">
+<link rel="stylesheet" href="/static/css/user_setting.css">
 {% endblock %}
 
 {% block main %}
@@ -21,17 +25,25 @@
     </div>
     <div class="form center">
         <form action="/api/upload/avatar" method="post" enctype="multipart/form-data">
-            <div class="jcrop">
-                <div class="jcrop-selected-img float-left">
-                    <img class="selected-img" src="{{ user.avatar }}">
+            <div class="fix-img">
+                <div class="float-left">
+                    <img id="selected-img" class="selected-img" src="{{ user.avatar }}">
                 </div>
-                <div class="img-preview float-right">
-                    <img class="img-preview-big img-big" src="{{ user.avatar }}">
-                    <img class="img-preview-middle img-middle" src="{{ user.avatar }}">
+                <div class="preview float-right">
+                    <div class="img-preview img-big float-left">
+                    </div>
+                    <div class="img-preview img-middle float-left">
+                    </div>
+                    <div class="img-preview img-small float-left">
+                    </div>
                 </div>
             </div>
             <div class="action">
-                <input class="file-input" type="file" name="photo" required>
+                <input id="data-img-x" type="hidden" name="x" value="">
+                <input id="data-img-y" type="hidden" name="y" value="">
+                <input id="data-img-nw" type="hidden" name="nw" value="">
+                <input id="data-img-nh" type="hidden" name="nh" value="">
+                <input class="file-input" type="file" accept="image/*" name="photo" required>
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% for category, message in messages %}

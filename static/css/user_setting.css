@@ -26,10 +26,11 @@ td{
     width: 100px;
     vertical-align: middle;
 }
-.jcrop-selected-img {
+.preview{
+    width:200px;
     overflow: hidden;
-    display: table-cell;
-    line-height:200px;
-    width: 200px;
-    height: 200px;
+}
+.img-preview{
+    margin: 5px;
+    overflow: hidden;
 }

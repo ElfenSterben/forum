@@ -8,7 +8,7 @@ var inputChange = function(e){
 
 var fileChange = function(e){
     var input = e.target
-    $('.selected-img').attr('src', window.URL.createObjectURL(input.files[0]))
+    $('#selected-img').cropper('replace', URL.createObjectURL(input.files[0]))
 }
 
 var btnSetInfo = function(e){
@@ -72,8 +72,37 @@ var bindEvents = function(){
     $('.btn-change-password').on('click', btnChangePassword)
 }
 
+var initCrop = function(){
+    img_x = $('#data-img-x')
+    img_y = $('#data-img-y')
+    img_nw = $('#data-img-nw')
+    img_nh = $('#data-img-nh')
+    $('#selected-img').cropper({
+        aspectRatio: 1/1,
+        viewMode: 1,
+        preview: '.img-preview',
+        minContainerWidth: 200,
+        minContainerHeight: 200,
+        crop: function(e) {
+        // Output the result data for cropping image.
+        img_x.val(Math.round(e.x))
+        img_y.val(Math.round(e.y))
+        img_nw.val(Math.round(e.width))
+        img_nh.val(Math.round(e.height))
+        console.log(e.x)
+        console.log(e.y);
+        console.log(e.width);
+        console.log(e.height);
+        console.log(e.rotate);
+        console.log(e.scaleX);
+        console.log(e.scaleY);
+      }
+    });
+}
+
 var __main = function(){
     bindEvents()
+    initCrop()
 }
 
 $(document).ready(__main)
