@@ -32,4 +32,4 @@ class Model(object):
         db.session.commit()
 
 from services.NotifyService import notify_service
-from services.NotifyService.NotifyConfig import *
+from services.NotifyService import *

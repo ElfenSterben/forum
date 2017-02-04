@@ -8,9 +8,9 @@ class Reply(Model, db.Model):
     __tablename__ = 'reply'
     id = db.Column(db.Integer, primary_key=True)
     created_time = db.Column(db.Integer)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id', ondelete='CASCADE'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     content = db.Column(db.String(1000))
     hidden = db.Column(db.Boolean, default=False)
 
@@ -39,7 +39,7 @@ class Reply(Model, db.Model):
                 notify = {
                     'target_id': form.get('reply_id'),
                     'target_type': TARGET_TYPE.REPLY,
-                    'action': ACTION.REPLY,
+                    'action': ACTION_TYPE.REPLY,
                     'sender_id': reply.sender_id,
                     'content': reply.sender.username + '在' + reply.comment.post.title + '回复了你',
                 }
@@ -47,13 +47,13 @@ class Reply(Model, db.Model):
                     'user': reply.sender,
                     'target_id': reply.id,
                     'target_type': TARGET_TYPE.REPLY,
-                    'reason': REASON_ACTION.REPLY_REPLY
+                    'reason': REASON_TYPE.REPLY_REPLY
                 }
             else:
                 notify = {
                     'target_id': reply.comment_id,
                     'target_type': TARGET_TYPE.COMMENT,
-                    'action': ACTION.REPLY,
+                    'action': ACTION_TYPE.REPLY,
                     'sender_id': reply.sender_id,
                     'content': reply.sender.username + '在' + reply.comment.post.title + '回复了你',
                 }
@@ -61,7 +61,7 @@ class Reply(Model, db.Model):
                     'user': reply.sender,
                     'target_id': reply.id,
                     'target_type': TARGET_TYPE.REPLY,
-                    'reason': REASON_ACTION.REPLY_COMMENT
+                    'reason': REASON_TYPE.REPLY_COMMENT
                 }
             notify_service.create_remind(**notify)
             notify_service.subscribe(**subscribe)

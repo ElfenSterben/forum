@@ -24,8 +24,8 @@ hostname = 'kaede'
 @app.before_request
 def current_user():
     u_id = session.get('user_id')
-    if u_id is not None:
-        user =  User.query.get(u_id)
+    user = User.query.get(u_id)
+    if user is not None:
         notify_service.pull_remind(user)
         notify_service.pull_announce(user)
         uns = notify_service.get_user_notifies(user)

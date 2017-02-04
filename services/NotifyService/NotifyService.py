@@ -1,7 +1,6 @@
 from models.Notify import Notify
 from models.UserNotify import UserNotify
 from models.Subscription import Subscription
-from models.SubscriptionConfig import SubscriptionConfig
 from .NotifyConfig import *
 
 class NotifyService(object):

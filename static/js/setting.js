@@ -78,24 +78,21 @@ var initCrop = function(){
     img_nw = $('#data-img-nw')
     img_nh = $('#data-img-nh')
     $('#selected-img').cropper({
+        dragMode: 'move',
         aspectRatio: 1/1,
         viewMode: 1,
         preview: '.img-preview',
         minContainerWidth: 200,
         minContainerHeight: 200,
+        cropBoxMovable: false,
+        cropBoxResizable: false,
+        toggleDragModeOnDblclick: false,
         crop: function(e) {
         // Output the result data for cropping image.
         img_x.val(Math.round(e.x))
         img_y.val(Math.round(e.y))
         img_nw.val(Math.round(e.width))
         img_nh.val(Math.round(e.height))
-        console.log(e.x)
-        console.log(e.y);
-        console.log(e.width);
-        console.log(e.height);
-        console.log(e.rotate);
-        console.log(e.scaleX);
-        console.log(e.scaleY);
       }
     });
 }

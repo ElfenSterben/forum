@@ -9,12 +9,12 @@ class Post(Model, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_time = db.Column(db.Integer)
     edited_time = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     title = db.Column(db.String(30))
     content = db.Column(db.String(1000))
     hidden = db.Column(db.Boolean, default=False)
-    node_id = db.Column(db.Integer, db.ForeignKey('node.id'))
-    comments = db.relationship('Comment', lazy='dynamic', backref='post')
+    node_id = db.Column(db.Integer, db.ForeignKey('node.id', ondelete='CASCADE'))
+    comments = db.relationship('Comment', lazy='dynamic',cascade="delete, delete-orphan", backref='post')
 
     def __init__(self, form):
         self.created_time = timestamp()
@@ -49,7 +49,7 @@ class Post(Model, db.Model):
                 'user': p.user,
                 'target_id': p.id,
                 'target_type': TARGET_TYPE.POST,
-                'reason': REASON_ACTION.CREATE_POST
+                'reason': REASON_TYPE.CREATE_POST
             }
             notify_service.subscribe(**subscribe)
             data['url'] = url_for('post.view',post_id=p.id)
@@ -59,8 +59,10 @@ class Post(Model, db.Model):
 
     @classmethod
     def form_valid(cls, form, message):
-        n = node.query.get(form.get('node_id'))
-        valid_node_exist = n is not None
+        nid = form.get('node_id')
+        if nid is not None:
+            n = node.query.get(nid)
+        valid_node_exist = nid is not None and n
         valid_title_len = 30 >= len(form.get('title', '')) >= 2
         valid_content_len = 1000 >= len(form.get('content', '')) >= 10
         if valid_node_exist and valid_title_len and valid_content_len:

@@ -8,11 +8,11 @@ class Comment(Model, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created_time = db.Column(db.Integer)
     edited_time = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     content = db.Column(db.String(200))
     hidden = db.Column(db.Boolean, default=False)
-    replies = db.relationship('Reply', lazy='dynamic', backref='comment')
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    replies = db.relationship('Reply', lazy='dynamic',cascade="delete, delete-orphan", backref='comment')
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'))
 
     def __init__(self, form):
         self.created_time = timestamp()
@@ -36,7 +36,7 @@ class Comment(Model, db.Model):
             notify = {
                 'target_id': c.post_id,
                 'target_type': TARGET_TYPE.POST,
-                'action': ACTION.COMMENT,
+                'action': ACTION_TYPE.COMMENT,
                 'sender_id': c.user_id,
                 'content': c.user.username + '评论了你的文章' + c.post.title,
             }
@@ -45,7 +45,7 @@ class Comment(Model, db.Model):
                 'user': c.user,
                 'target_id': c.id,
                 'target_type': TARGET_TYPE.COMMENT,
-                'reason': REASON_ACTION.COMMENT_POST
+                'reason': REASON_TYPE.COMMENT_POST
             }
             notify_service.subscribe(**subscribe)
         else:

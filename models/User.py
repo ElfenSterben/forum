@@ -1,5 +1,5 @@
 from flask import session
-from .SubscriptionConfig import SubscriptionConfig
+from .SubscriptionConfig import SubscriptionConfig as SBConfig
 from . import *
 from .Notify import Notify
 
@@ -15,14 +15,14 @@ class User(Model, db.Model):
     password = db.Column(db.String(20))
     email = db.Column(db.String(50), unique=True)
     avatar = db.Column(db.String(200), default='/static/avatar/default_avatar.gif')
-    subscription_config = db.relationship('SubscriptionConfig', uselist=False, backref='user')
+    subscription_config = db.relationship('SubscriptionConfig',cascade="delete, delete-orphan", uselist=False, backref='user')
 
-    posts = db.relationship('Post', lazy='dynamic', backref='user')
-    comments = db.relationship('Comment', lazy='dynamic', backref='user')
-    sends = db.relationship('Reply', lazy='dynamic', backref='sender', foreign_keys='Reply.sender_id')
-    receives = db.relationship('Reply', lazy='dynamic', backref='receiver', foreign_keys='Reply.receiver_id')
-    subscriptions = db.relationship('Subscription', lazy='dynamic', backref='user')
-    user_notifies = db.relationship('UserNotify', lazy='dynamic', backref='user')
+    posts = db.relationship('Post', lazy='dynamic',cascade="delete, delete-orphan", backref='user')
+    comments = db.relationship('Comment', lazy='dynamic',cascade="delete, delete-orphan", backref='user')
+    sends = db.relationship('Reply', lazy='dynamic', backref='sender',cascade="delete, delete-orphan", foreign_keys='Reply.sender_id')
+    receives = db.relationship('Reply', lazy='dynamic', backref='receiver',cascade="delete, delete-orphan", foreign_keys='Reply.receiver_id')
+    subscriptions = db.relationship('Subscription', lazy='dynamic',cascade="delete, delete-orphan", backref='user')
+    user_notifies = db.relationship('UserNotify', lazy='dynamic',cascade="delete, delete-orphan", backref='user')
 
     def __init__(self, form):
         super(User, self).__init__()
@@ -58,7 +58,7 @@ class User(Model, db.Model):
         r['success'] = valid
         if valid:
             u = cls(form)
-            s = SubscriptionConfig()
+            s = SBConfig()
             u.save()
             u.subscription_config = s
             s.save()

@@ -1,7 +1,7 @@
 from . import *
 from models.Post import Post
 from models.Node import Node
-
+from models.Reply import Reply
 
 main = Blueprint('post', __name__)
 

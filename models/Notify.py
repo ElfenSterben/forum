@@ -8,8 +8,8 @@ class Notify(Model, db.Model):
     target_id = db.Column(db.Integer)
     target_type = db.Column(db.String(100))
     action = db.Column(db.String(100))
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user_notify = db.relationship('UserNotify', lazy='dynamic', backref='notify')
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    user_notify = db.relationship('UserNotify', lazy='dynamic',cascade="delete, delete-orphan", backref='notify')
     created_time = db.Column(db.Integer)
 
     def __init__(self, form):

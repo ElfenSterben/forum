@@ -116,9 +116,9 @@ var btnOnNewReply = function(e){
     console.log(div_input)
     var reply_id = $(div_input).data('replyid')
     var message = $('.reply-message').first()
-    var list = $('.reply-list').first()
-    var content = $('.input-reply').first().val()
-    var comment_id = $('.input-reply').first().data('commentid')
+    var list = $(box).find('.reply-list').first()
+    var content = $(box).find('.input-reply').first().val()
+    var comment_id = $(box).find('.input-reply').first().data('commentid')
     if(content.startsWith('回复') && content.includes(':')){
         var receiver_name = content.split('回复 ')[1].split(':')[0]
     }
