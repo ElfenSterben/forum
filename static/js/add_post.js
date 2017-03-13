@@ -14,8 +14,7 @@ var btnOnNewPost = function(e){
     var response = function(r){
         if (r.success){
                 var data = r.data
-                var url = base_url + data.url
-                window.location.href = url
+                window.location.href = data.url
         }
         else{
             var message = r.message

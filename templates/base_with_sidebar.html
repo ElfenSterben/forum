@@ -9,9 +9,9 @@
         <p>
             现在还没有登录，马上登录？
         </p>
-        <a class="btn" href="/login">登录</a>
+        <a class="btn" href="{{url_for('login.login_view')}}">登录</a>
         <p>
-            没有帐号?马上 <a class="my-link" href="/login">注册帐号</a>
+            没有帐号?马上 <a class="my-link" href="{{url_for('login.login_view')}}">注册帐号</a>
         </p>
     </div>
     {% else %}

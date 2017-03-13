@@ -107,7 +107,7 @@
     </div>
     <div class="box-comment-input">
         {% if user is none%}
-            <span>请<a class="btn" href="/login">登录</a>后再评论</span>
+            <span>请<a class="btn" href="{{url_for('login.login_view')}}">登录</a>后再评论</span>
         {% else %}
         <div class="comment-input-header inner-box clearfix">
             <a class="float-right" href="#top">↑回到顶部</a>

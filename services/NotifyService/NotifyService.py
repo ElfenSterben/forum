@@ -55,6 +55,8 @@ class NotifyService(object):
             UserNotify.new(data)
 
     def pull_remind(self, user):
+        if user is None:
+            return
         subscriptions = user.get_subscriptions()
         last_remind = user.last_user_notify(NOTIFY_TYPE.REMIND)
         last_time = last_remind.notify.created_time if last_remind is not None else 0
