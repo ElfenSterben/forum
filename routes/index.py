@@ -7,7 +7,7 @@ main = Blueprint('index', __name__)
 
 @main.route('/')
 def index():
-    data = get_page_data(Post)
+    data = pre_page_data(Post)
     return render_template('index.html', **data)
 
 @main.route('/<string:node_name>')
@@ -16,10 +16,10 @@ def node_index(node_name):
     if selected_node is None:
         return redirect(url_for('index.index'))
 
-    data = get_page_data(Post, selected_node)
+    data = pre_page_data(Post, selected_node)
     return render_template('index.html', **data)
 
-def get_page_data(Model, node=None):
+def pre_page_data(Model, node=None):
     page = request.args.get('page', '1')
     if not page.isdigit():
         page = '1'
