@@ -24,57 +24,12 @@ class Post(Model, db.Model):
         self.content = form.get('content', '')
         self.node_id = form.get('node_id')
 
-    def update(self, form, r):
-        message = {}
-        form_valid = self.form_valid(form, message)
-        r['success'] = form_valid
-        if form_valid:
-            self.edit_time = timestamp()
-            self.title = form.get('title', '')
-            self.content = form.get('content', '')
-            self.node_id = form.get('node_id', '1')
-            self.save()
-        r['message'] = message
-
-    @classmethod
-    def add(cls, form, r):
-        message = {}
-        valid = cls.form_valid(form, message)
-        data = {}
-        r['success'] = valid
-        if valid:
-            p = cls(form)
-            p.save()
-            subscribe = {
-                'user': p.user,
-                'target_id': p.id,
-                'target_type': TARGET_TYPE.POST,
-                'reason': REASON_TYPE.CREATE_POST
-            }
-            notify_service.subscribe(**subscribe)
-            data['url'] = url_for('post.view',post_id=p.id)
-            r['data'] = data
-        else:
-            r['message'] = message
-
-    @classmethod
-    def form_valid(cls, form, message):
-        nid = form.get('node_id')
-        if nid is not None:
-            n = node.query.get(nid)
-        valid_node_exist = nid is not None and n
-        valid_title_len = 30 >= len(form.get('title', '')) >= 2
-        valid_content_len = 1000 >= len(form.get('content', '')) >= 10
-        if valid_node_exist and valid_title_len and valid_content_len:
-            return True
-        else:
-            if not valid_title_len:
-                message['.post-title-message'] = '标题请输入2-30个字符'
-            if not valid_content_len:
-                message['.post-content-message'] = '内容请输入10-1000个字符'
-            if not valid_node_exist:
-                message['.post-node-message'] = '节点不存在'
-            return False
+    def update(self, form):
+        self.edit_time = timestamp()
+        self.title = form.get('title')
+        self.content = form.get('content')
+        self.node_id = form.get('node_id')
+        self._update()
 
     def permission_valid(self, u):
         return u.username == self.user.username

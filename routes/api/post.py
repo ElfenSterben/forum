@@ -1,35 +1,21 @@
 from models.Post import Post
+from services import post
 from . import *
 
 
 @main.route('/post/add', methods=['post'])
 @user_required
 def post_add():
-    r = {}
-    n_json = request.get_json()
-    Post.add(n_json, r)
-    return jsonify(r)
+    form = request.get_json()
+    result = post.add(form)
+    return jsonify(result)
 
 @main.route('/post/update/<int:post_id>', methods=['post'])
 @user_required
 def post_update(post_id):
-    r = {}
-    p = Post.query.get(post_id)
-
-    if p is None:
-        r['success'] = False
-        r['message'] = '文章不存在'
-    elif not p.permission_valid(g.user):
-        r['success'] = False
-        r['message'] = '不是你的文章'
-    else:
-        data = {}
-        data['url'] = '/post/' + str(post_id)
-        r['data'] = data
-        n_json = request.get_json()
-        p.update(n_json, r)
-
-    return jsonify(r)
+    form = request.get_json()
+    result = post.update(post_id, form)
+    return jsonify(result)
 
 # @main.route('/post/<int:post_id>/vote', methods=['get'])
 # @user_required

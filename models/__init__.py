@@ -31,5 +31,10 @@ class Model(object):
         db.session.merge(self)
         db.session.commit()
 
+    @classmethod
+    def new(cls, form):
+        m = cls(form)
+        m.save()
+
 from services.NotifyService import notify_service
 from services.NotifyService import *
