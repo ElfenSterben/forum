@@ -17,6 +17,12 @@ class Node(Model, db.Model):
         node = cls(form)
         node.save()
 
+    @classmethod
+    def user_list(cls):
+        data = {}
+        node_list = Node.query.filter_by(hidden=False)
+        data['node_list'] = node_list
+
     def json(self):
         r = {
             'id': self.id,

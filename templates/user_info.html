@@ -20,11 +20,11 @@
             <div class="profile-top-right float-left">
                 <div class="check-user-name">
                     <p>
-                        {{check_user.username}}
+                        {{view_user.username}}
                     </p>
                 </div>
                 <div class="check-user-info">
-                    <small>{{hostname}} 第 {{check_user.id}} 号会员 加入于 <time class="usr-reg-time">{{check_user.created_time}}</time></small>
+                    <small>{{hostname}} 第 {{view_user.id}} 号会员 加入于 <time class="usr-reg-time">{{view_user.created_time}}</time></small>
                 </div>
             </div>
         </div>
@@ -33,9 +33,9 @@
     </div>
     <div class="check-user-post bg-white">
         <div class="box-tab inner-box">
-            <span>{{check_user.username}}发布过的主题</span>
+            <span>{{view_user.username}}发布过的主题</span>
         </div>
-        {% for p in check_user.posts %}
+        {% for p in view_user.posts %}
         <div class="post-item inner-box">
             <div class="post-title">
                 <h1><a class="my-link" href="{{url_for('post.view',post_id=p.id)}}">{{p.title}}</a></h1>
@@ -54,9 +54,9 @@
     </div>
     <div class="check-user-comment bg-white">
         <div class="box-tab inner-box">
-            <span>{{check_user.username}}的回复</span>
+            <span>{{view_user.username}}的回复</span>
         </div>
-        {% for c in check_user.comments %}
+        {% for c in view_user.comments %}
         <div class="comment-item shandow underline-gray">
             <div class="comment-post user-comment-padding clearfix bg-gray">
                 <span>>>&nbsp;&nbsp;回复了 {{c.post.user.username}} 的主题</span>

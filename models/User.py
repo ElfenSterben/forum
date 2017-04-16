@@ -34,6 +34,34 @@ class User(Model, db.Model):
         self.created_time = timestamp()
 
     @classmethod
+    def view(cls, username):
+        data = {}
+        user = User.query.filter_by(username=username).first()
+        data['view_user'] = user
+        return data
+
+    def notifies(self, ntype, page):
+        if not page.isdigit():
+            page = '1'
+        uns = self.user_notifies
+        paginate = uns.join(Notify).filter_by(
+            type=ntype
+        ).order_by(
+            Notify.created_time.desc()
+        ).paginate(
+            int(page), 10, False
+        )
+        un_list = paginate.items
+        notify_service.read(un_list)
+        data = {
+            'user_notify_paginate': paginate,
+            'user_notify_list': un_list,
+            'selected_type': ntype,
+            'notify_types': NOTIFY_TYPE
+        }
+        return data
+
+    @classmethod
     def login(cls, form, r):
         message = {}
         r['success'] = cls.login_valid(form, message)

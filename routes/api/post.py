@@ -1,5 +1,4 @@
-from models.Post import Post
-from services import post
+from controllor import post
 from . import *
 
 

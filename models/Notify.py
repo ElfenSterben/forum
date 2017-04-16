@@ -32,3 +32,5 @@ class Notify(Model, db.Model):
         return cls.query.filter(
             Notify.created_time>start_time
         ).filter_by(**query).all()
+
+

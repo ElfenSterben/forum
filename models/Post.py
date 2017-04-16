@@ -33,6 +33,3 @@ class Post(Model, db.Model):
 
     def permission_valid(self, u):
         return u.username == self.user.username
-
-
-
