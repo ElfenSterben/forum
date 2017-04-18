@@ -26,11 +26,10 @@ class User(Model, db.Model):
 
     def __init__(self, form):
         super(User, self).__init__()
-        self.username = form.get('username')
+        self.username = form.get('username').strip()
         self.nickname = self.username
-        self.password = form.get('password')
-        self.email = form.get('email')
-
+        self.password = form.get('password').strip()
+        self.email = form.get('email').strip()
         self.created_time = timestamp()
 
     @classmethod
@@ -60,24 +59,6 @@ class User(Model, db.Model):
             'notify_types': NOTIFY_TYPE
         }
         return data
-
-    @classmethod
-    def login(cls, form, r):
-        message = {}
-        r['success'] = cls.login_valid(form, message)
-        r['message'] = message
-
-    @classmethod
-    def login_valid(cls, form, message):
-        username = form.get('username')
-        password = form.get('password')
-        u = cls.query.filter_by(username=username).first()
-        valid = u is None or u.password != password
-        if valid:
-            message['.login-message'] = '用户名或密码错误'
-        else:
-            session['user_id'] = u.id
-        return not valid
 
     @classmethod
     def register(cls, form, r):

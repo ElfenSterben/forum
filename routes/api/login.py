@@ -1,18 +1,16 @@
-from models.User import User
+from controllor import account
 from . import *
 
 
 @main.route('/login', methods=['post'])
 @csrf.exempt
 def login():
-    r = {}
     u_json = request.get_json()
-    User.login(u_json, r)
-    return jsonify(r)
+    result = account.login(u_json)
+    return jsonify(result)
 
 @main.route('/register', methods=['post'])
 def register():
-    r = {}
     u_json = request.get_json()
-    User.register(u_json, r)
+    account.register(u_json, r)
     return jsonify(r)
