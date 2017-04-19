@@ -26,3 +26,5 @@ class Comment(Model, db.Model):
             'created_time': self.created_time,
         }
         return json
+
+

@@ -33,3 +33,6 @@ class Post(Model, db.Model):
 
     def permission_valid(self, u):
         return u.username == self.user.username
+
+    def url(self):
+        return url_for('post.view', post_id=self.id)

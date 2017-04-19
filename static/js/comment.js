@@ -52,6 +52,10 @@ var replyTemplate = function(d){
 }
 
 var btnOnNewComment = function(e){
+    var msgMapping = {
+        'content': '.comment-message',
+        'post_id': '.comment-message',
+    }
     var btn = e.target
     var box = $(btn).closest('.comment-input-body')
     var message = $('.comment-message').first()
@@ -72,8 +76,9 @@ var btnOnNewComment = function(e){
         else{
             var message = r.message
             for (var k in message){
-                var p_message = $(box).find(k).first()
-                p_message.text(message[k])
+                var c = msgMapping[k]
+                var p_message = $(box).find(c).first()
+                p_message.text(message[k][0])
                 p_message.addClass('error')
             }
         }

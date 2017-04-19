@@ -22,6 +22,7 @@ class Node(Model, db.Model):
         data = {}
         node_list = Node.query.filter_by(hidden=False)
         data['node_list'] = node_list
+        return data
 
     def json(self):
         r = {

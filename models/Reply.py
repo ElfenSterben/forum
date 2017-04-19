@@ -35,7 +35,6 @@ class Reply(Model, db.Model):
             data['receiver'] = reply.receiver.json() if reply.receiver is not None else None
             r['data'] = data
             if reply.receiver is not None:
-                print(form)
                 notify = {
                     'target_id': form.get('reply_id'),
                     'target_type': TARGET_TYPE.REPLY,

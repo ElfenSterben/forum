@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+
 from flask import url_for
 import time
 
@@ -34,6 +35,7 @@ class Model(object):
     def new(cls, form):
         m = cls(form)
         m.save()
+        return m
 
 from services.NotifyService import notify_service
 from services.NotifyService import *

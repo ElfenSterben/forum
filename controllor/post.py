@@ -1,26 +1,21 @@
 from flask import url_for, g, abort, request, current_app
 from models.Post import Post
 from models.Node import Node
+from forms.PostSchema import post_schema
 from services.NotifyService import notify_service, TARGET_TYPE, REASON_TYPE
 
 
 def add(form):
-    result = dict(
-        success=False,
-        message=dict(),
-        data=dict()
-    )
-    valid_msg = form_valid(form)
-    valid = valid_msg['valid']
-    result['success'] = valid
-    result['message'] = valid_msg['message']
-    if valid:
-        p = Post.new(form)
+    result = dict(success=False)
+    res = post_schema.load(form)
+    if res.errors == {}:
+        result['success'] = True
+        p = Post.new(res.data)
         subscribe_post(p)
-        data = dict(
-            url=url_for('post.view', post_id=p.id)
-        )
+        data = dict(url=p.url())
         result['data'] = data
+    print(res.errors)
+    result['message'] = res.errors
     return result
 
 def page(p, node_name=None):
@@ -68,9 +63,9 @@ def edit(post_id):
     if p is None:
         abort(404)
     valid = p.permission_valid(g.user)
-    node_list = Node.query.filter_by(hidden=False)
     if not valid:
         abort(403)
+    node_list = Node.query.filter_by(hidden=False)
     data = dict(
         node_list=node_list,
         post=p,
@@ -78,17 +73,17 @@ def edit(post_id):
     return data
 
 def update(post_id, form):
-    p = g.user.posts.query.filter_by(id=post_id)
+    result = dict(success=False)
+    res = post_schema.load(form)
+    p = g.user.posts.filter_by(id=post_id).first()
     if p is None:
         abort(404)
-    valid_msg = form_valid(form)
-    valid = valid_msg['valid']
-    result = dict(
-        success=valid,
-        message=valid_msg['msg']
-    )
-    if valid:
-        p.update(form)
+    if res.errors == {}:
+        result['success'] = True
+        p.update(res.data)
+        data = dict(url=p.url())
+        result['data'] = data
+    result['message'] = res.errors
     return result
 
 def delete(post_id):
@@ -115,6 +110,7 @@ def form_valid(form):
         valid=False,
         msg=dict()
     )
+
     nid = form.get('node_id')
     n = Node.query.filter_by(id=nid)
     valid_node_exist = n is not None

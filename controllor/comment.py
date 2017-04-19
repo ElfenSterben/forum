@@ -6,25 +6,24 @@ from services.NotifyService import(
 )
 from models.Comment import Comment
 from models.Post import Post
+from forms.CommentSchema import comment_schema
+from forms.UserSchema import user_schema
 
 def add(form):
-    result = dict(
-        success=False,
-        message=dict(),
-        data=dict()
-    )
-    valid_msg = form_valid(form)
-    valid = valid_msg['valid']
-    result['success'] = valid
-    result['message'] = valid_msg['msg']
-    if valid:
-        c = Comment.new(form)
+    result = dict(success=False)
+    res = comment_schema.load(form)
+    if res.errors == {}:
+        result['success'] = True
+        c = Comment.new(res.data)
         user = c.user
-        data = result['data']
-        data['comment'] = c.json()
-        data['user'] = user.json()
+        data = dict(
+            comment=comment_schema.dump(c).data,
+            user=user_schema.dump(user).data
+        )
+        result['data'] = data
         create_notify(c.post, user)
         subscribe_comment(c, user)
+    result['message'] = res.errors
     return result
 
 def form_valid(form):

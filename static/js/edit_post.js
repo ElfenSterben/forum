@@ -1,5 +1,10 @@
 
 var btnOnUpdatePost = function(e){
+    var msgMapping = {
+            'title': '.post-title-message',
+            'content': '.post-content-message',
+            'node_id': '.post-node-message'
+        }
     var btn = e.target
     var box = $(btn).closest('.div-post-form')
     var title = $(box).find('.input-post-title').first().val()
@@ -13,13 +18,15 @@ var btnOnUpdatePost = function(e){
     }
     var response = function(r){
         if (r.success){
+                var data = r.data
                 window.location.href = data.url
         }
         else{
             var message = r.message
             for (var k in message){
-                var p_message = $(box).find(k).first()
-                p_message.text(message[k])
+                var c = msgMapping[k]
+                var p_message = $(box).find(c).first()
+                p_message.text(message[k][0])
                 p_message.addClass('error')
             }
         }
