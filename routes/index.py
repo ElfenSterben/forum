@@ -14,5 +14,5 @@ def index():
 @main.route('/<string:node_name>')
 def node_index(node_name):
     page = request.args.get('page', '1')
-    data = post.page(page)
+    data = post.page(page, node_name)
     return render_template('index.html', **data)

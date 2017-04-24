@@ -12,5 +12,5 @@ def login():
 @main.route('/register', methods=['post'])
 def register():
     u_json = request.get_json()
-    account.register(u_json, r)
-    return jsonify(r)
+    result = account.register(u_json)
+    return jsonify(result)

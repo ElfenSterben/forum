@@ -14,19 +14,18 @@ def add(form):
         subscribe_post(p)
         data = dict(url=p.url())
         result['data'] = data
-    print(res.errors)
     result['message'] = res.errors
     return result
 
-def page(p, node_name=None):
+def page(p, node=None):
     if not p.isdigit():
         p = '1'
     page = int(p)
     pre_page = current_app.config.get('POST_PRE_PAGE', 20)
-    if node_name is None:
+    if node is None:
         query = Post.query
     else:
-        node = Node.query.filter_by(name=node_name).first()
+        node = Node.query.filter_by(name=node).first()
         if node is None:
             abort(404)
         query = node.posts
@@ -37,7 +36,7 @@ def page(p, node_name=None):
         'post_list': post_list,
         'paginate': paginate,
         'node_list': node_list,
-        'selected_node': node_name,
+        'selected_node': node,
     }
     return data
 

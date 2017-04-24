@@ -11,7 +11,7 @@ class PostSchema(Schema):
     title = fields.Str(required=True, validate=validate.Length(min=2, max=200, error='标题长度(2-30)个字符'))
     content = fields.Str(required=True, validate=validate.Length(min=10, max=1000, error='内容长度(10-1000)个字符'))
     node_id = fields.Int(required=True, error='节点类型错误')
-    url = fields.Method(dump_only=True)
+    url = fields.Method(method_name='post_url', dump_only=True)
 
     def post_url(self, post):
         return url_for('post.view', post_id=post.id)

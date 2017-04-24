@@ -1,6 +1,6 @@
 {% extends "base_with_sidebar.html" %}
 {% block title %}
- {{ check_user.username }}
+ {{ view_user.username }}
 {% endblock %}
 
 {% block css %}
@@ -14,7 +14,7 @@
         <div class="profile-top clearfix">
             <div class="profile-top-left float-left">
                 <div class="avatar">
-                    <img class="img-big" src="{{check_user.avatar}}" alt="" />
+                    <img class="img-big" src="{{view_user.avatar}}" alt="" />
                 </div>
             </div>
             <div class="profile-top-right float-left">

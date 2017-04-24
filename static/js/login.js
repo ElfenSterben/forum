@@ -32,7 +32,7 @@ var btnOnLogin = function(e){
     }
     var response = function(r){
         if (r.success){
-            window.location.href = document.referrer
+            window.location.href = r.referrer
         }
         else{
             var message = r.message
@@ -64,7 +64,7 @@ var btnOnRegister = function(e){
     }
     var response = function(r){
         if (r.success){
-            window.location.href = document.referrer
+            window.location.href = r.referrer
         }
         else{
             var message = r.message
