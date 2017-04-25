@@ -7,13 +7,13 @@ var animationLogin = {
 }
 
 var onSelected = function(e){
-    var animationSelect = {
+    let animationSelect = {
         '.login-view': animationLogin,
         '.register-view': animationRegister
     }
-    var div = e.target
-    var data = $(div).data('selected')
-    var animation = animationSelect[data]
+    let div = e.target
+    let data = $(div).data('selected')
+    let animation = animationSelect[data]
     $('.bottom-line').stop()
     $('.bottom-line').animate(animation, 500, 'swing')
     $('.view-item').addClass('hidden')
@@ -22,22 +22,22 @@ var onSelected = function(e){
 
 
 var btnOnLogin = function(e){
-    var btn = e.target
-    var box = $(btn).closest('.login-view')
-    var username = $(box).find('.username').first().val()
-    var password = $(box).find('.password').first().val()
-    var form = {
+    let btn = e.target
+    let box = $(btn).closest('.login-view')
+    let username = $(box).find('.username').first().val()
+    let password = $(box).find('.password').first().val()
+    let form = {
         'username': username,
         'password': password
     }
-    var response = function(r){
+    let response = function(r){
         if (r.success){
             window.location.href = r.referrer
         }
         else{
-            var message = r.message
-            for (var k in message){
-                var p_message = $(box).find(k).first()
+            let message = r.message
+            for (let k in message){
+                let p_message = $(box).find(k).first()
                 p_message.text(message[k])
                 p_message.addClass('error')
             }
@@ -49,27 +49,27 @@ var btnOnLogin = function(e){
 
 
 var btnOnRegister = function(e){
-    var btn = e.target
-    var view = $(btn).closest('.register-view')
-    var username = $(view).find('.username').first().val()
-    var password = $(view).find('.password').first().val()
-    var confirm = $(view).find('.confirm-password').first().val()
-    var email = $(view).find('.email').first().val()
+    let btn = e.target
+    let view = $(btn).closest('.register-view')
+    let username = $(view).find('.username').first().val()
+    let password = $(view).find('.password').first().val()
+    let confirm = $(view).find('.confirm-password').first().val()
+    let email = $(view).find('.email').first().val()
 
-    var form = {
+    let form = {
         'username': username,
         'password': password,
         'confirm': confirm,
         'email': email
     }
-    var response = function(r){
+    let response = function(r){
         if (r.success){
             window.location.href = r.referrer
         }
         else{
-            var message = r.message
-            for (var k in message){
-                var p_message = $(view).find(k).first()
+            let message = r.message
+            for (let k in message){
+                let p_message = $(view).find(k).first()
                 p_message.text(message[k])
                 p_message.addClass('error')
             }

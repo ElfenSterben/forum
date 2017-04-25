@@ -1,5 +1,5 @@
 var nodeTemplate = function(n){
-    var n = `
+    let n = `
     <div class="node-box">
         <div class="node-item" data-id="${n.id}">
             <div class="node-title">
@@ -18,15 +18,15 @@ var nodeTemplate = function(n){
 }
 
 var btnOnNewNode = function(e){
-    var btn = e.target
-    var box = $(btn).closest('.node-input-box')
-    var name = $(box).find('.input-node-content').first().val()
-    var description = $(box).find('.input-node-description').first().val()
-    var form = {
+    let btn = e.target
+    let box = $(btn).closest('.node-input-box')
+    let name = $(box).find('.input-node-content').first().val()
+    let description = $(box).find('.input-node-description').first().val()
+    let form = {
         'name': name,
         'description': description
     }
-    var response = function(r){
+    let response = function(r){
         if (r.success){
             n = r.data
             $('.node-lists').prepend(nodeTemplate(n))
@@ -39,14 +39,14 @@ var btnOnNewNode = function(e){
 }
 
 var btnOnDeleteNode = function(e){
-    var btn = e.target
-    var item = $(btn).closest('.node-item')
-    var box = $(item).closest('.node-box')
-    var id = $(item).data('id')
-    var form = {
+    let btn = e.target
+    let item = $(btn).closest('.node-item')
+    let box = $(item).closest('.node-box')
+    let id = $(item).data('id')
+    let form = {
         'id': id
     }
-    var response = function(r){
+    let response = function(r){
         if (r.success){
             box.remove()
             alert('删除成功')

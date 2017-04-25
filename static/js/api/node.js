@@ -1,11 +1,11 @@
 api.nodeAdd = function(form, callback){
-    var url = '/api/node/add'
-    var data = JSON.stringify(form)
+    let url = '/api/node/add'
+    let data = JSON.stringify(form)
     api.post(url, data, callback)
 }
 
 api.nodeDelete = function(form, callback){
-    var url = '/api/node/delete'
-    var data = JSON.stringify(form)
+    let url = '/api/node/delete'
+    let data = JSON.stringify(form)
     api.post(url, data, callback)
 }

@@ -60,7 +60,7 @@
         </div>
         <div class="comment-list">
             {% for c in post_comments %}
-            <div class="comment-item inner-box" data-commentid="{{ c.id }}">
+            <div id="id-comment-{{ c.id }}" class="comment-item inner-box" data-commentid="{{ c.id }}">
                 <div class="comment-body clearfix">
                     <div class="comment-user-avatar float-left">
                         <img class="img-middle" src="{{c.user.avatar}}" alt="" />
@@ -79,7 +79,21 @@
                     <p class="reply-view-message"></p>
                     <a class="my-link btn-reply-view not-view float-right">展开回复</a>
                 </div>
-                <div class="reply-view"></div>
+                <div class="reply-view hidden">
+                    <div class='reply-container'>
+                    </div>
+                    <div class="reply-pages">
+                        <div class="center">
+                        </div>
+                    </div>
+                    {% if user is not none%}
+                    <div class="div-reply-input">
+                        <textarea class="input-reply" data-commentid="{{ c.id }}"></textarea>
+                        <p class="reply-message message"> <p>
+                        <button class="btn btn-new-reply" type="button">我也说一句</button>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
             {% endfor %}
         </div>

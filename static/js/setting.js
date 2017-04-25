@@ -1,32 +1,32 @@
 var inputChange = function(e){
-    var input = e.target
-    var td = input.closest('td')
-    var p_message = $(td).find('.message').first()
+    let input = e.target
+    let td = input.closest('td')
+    let p_message = $(td).find('.message').first()
     console.log(p_message)
     p_message.remove()
 }
 
 var fileChange = function(e){
-    var input = e.target
+    let input = e.target
     $('#selected-img').cropper('replace', URL.createObjectURL(input.files[0]))
 }
 
 var btnSetInfo = function(e){
-    var btn = e.target
-    var box = $(btn).closest('.form')
-    var email = $(box).find('.email').first().val()
-    var form = {
+    let btn = e.target
+    let box = $(btn).closest('.form')
+    let email = $(box).find('.email').first().val()
+    let form = {
         'email': email
     }
-    var response = function(r){
+    let response = function(r){
         if (r.success){
             alert('修改成功')
             window.location.reload()
         }
         else{
-            var message = r.message
-            for (var k in message){
-                var p_message = $(box).find(k).first()
+            let message = r.message
+            for (let k in message){
+                let p_message = $(box).find(k).first()
                 p_message.text(message[k])
                 p_message.addClass('error')
             }
@@ -37,25 +37,25 @@ var btnSetInfo = function(e){
 }
 
 var btnChangePassword = function(e){
-    var btn = e.target
-    var box = $(btn).closest('.form')
-    var old_pwd = $(box).find('.old-password').first().val()
-    var new_pwd = $(box).find('.new-password').first().val()
-    var confirm_pwd = $(box).find('.confirm-password').first().val()
-    var form = {
+    let btn = e.target
+    let box = $(btn).closest('.form')
+    let old_pwd = $(box).find('.old-password').first().val()
+    let new_pwd = $(box).find('.new-password').first().val()
+    let confirm_pwd = $(box).find('.confirm-password').first().val()
+    let form = {
         'old-password': old_pwd,
         'new-password': new_pwd,
         'confirm-password': confirm_pwd
     }
-    var response = function(r){
+    let response = function(r){
         if (r.success){
             alert('修改成功')
             window.location.reload()
         }
         else{
-            var message = r.message
-            for (var k in message){
-                var p_message = $(box).find(k).first()
+            let message = r.message
+            for (let k in message){
+                let p_message = $(box).find(k).first()
                 p_message.text(message[k])
                 p_message.addClass('error')
             }

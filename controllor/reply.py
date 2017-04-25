@@ -13,12 +13,12 @@ def add(form):
         result['success'] = True
         r = Reply.new(res.data)
         data = dict(
-            reply=reply_schema.dump(r),
-            sender=user_schema.dump(r.sender),
+            reply=reply_schema.dump(r).data,
+            sender=user_schema.dump(r.sender).data,
             receiver=None
         )
         if r.receiver is not None:
-            data['receiver'] = user_schema.dump(r.receiver)
+            data['receiver'] = user_schema.dump(r.receiver).data
             create_notify_with_receiver(form.get('reply_id'), r)
         else:
             create_notify_without_receiver(r)
@@ -28,15 +28,20 @@ def add(form):
     return result
 
 def page(comment_id, page):
+    result = dict(success=False)
     c = Comment.query.get(comment_id)
     if c is None:
-        abort(404)
+        result['message'] = {
+            'comment': ['评论不存在']
+        }
+        return result
     if not page.isdigit():
         page = '1'
     page = int(page)
     reply_pre_page = current_app.config.get('REPLY_PRE_PAGE', 15)
     reply_paginate = c.replies.paginate(page, reply_pre_page, False)
     comment_replies = reply_paginate.items
+    result['success'] = True
     data = dict(
         comment_id=c.id,
         current_page=reply_paginate.page,
@@ -44,14 +49,17 @@ def page(comment_id, page):
     )
     reply_list = []
     for reply in comment_replies:
-        r = reply_schema.dump(reply)
-        r['sender'] = user_schema.dump(reply.sender)
-        r['receiver'] = None
+        r = dict(
+            reply=reply_schema.dump(reply).data,
+            sender=user_schema.dump(reply.sender).data,
+            receiver=None
+        )
         if reply.receiver is not None:
-            r['receiver'] = user_schema.dump(reply.receiver)
+            r['receiver'] = user_schema.dump(reply.receiver).data
         reply_list.append(r)
     data['reply_list'] = reply_list
-    return data
+    result['data'] = data
+    return result
 
 def subscribe_reply(reply):
     subscribe = {

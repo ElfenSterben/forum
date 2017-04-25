@@ -20,6 +20,11 @@ class Reply(Model, db.Model):
         self.receiver = User.query.filter_by(username=form.get('receiver_name')).first()
         self.comment_id = form.get('comment_id')
         self.content = form.get('content', '')
+        content = form.get('content')
+        if self.receiver is not None:
+            self.content = content.split(':')[1]
+        else:
+            self.content = content
 
     @classmethod
     def add(cls, form, r):

@@ -1,11 +1,11 @@
 api.login = function(form, callback){
-    var url = '/api/login'
-    var data = JSON.stringify(form)
+    let url = '/api/login'
+    let data = JSON.stringify(form)
     api.post(url, data, callback)
 }
 
 api.register = function(form, callback){
-    var url = '/api/register'
-    var data = JSON.stringify(form)
+    let url = '/api/register'
+    let data = JSON.stringify(form)
     api.post(url, data, callback)
 }
