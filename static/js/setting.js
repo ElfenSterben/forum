@@ -43,9 +43,9 @@ var btnChangePassword = function(e){
     let new_pwd = $(box).find('.new-password').first().val()
     let confirm_pwd = $(box).find('.confirm-password').first().val()
     let form = {
-        'old-password': old_pwd,
-        'new-password': new_pwd,
-        'confirm-password': confirm_pwd
+        'old_password': old_pwd,
+        'new_password': new_pwd,
+        'confirm_password': confirm_pwd
     }
     let response = function(r){
         if (r.success){

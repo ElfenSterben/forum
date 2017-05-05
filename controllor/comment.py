@@ -52,6 +52,7 @@ def create_notify(post, sender):
         'sender_id': sender.id,
         'content': sender.username + '评论了你的文章' + post.title,
     }
+    user_link = '<a href="{}">{}</a>'
     notify_service.create_remind(**notify)
 
 def subscribe_comment(comment, user):

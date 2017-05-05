@@ -20,7 +20,7 @@ a{
     content: '';
     display: block;
 }
-.fixed:after{
+.fixed{
     position: fixed;
 }
 .header{
@@ -29,6 +29,7 @@ a{
     min-width: 1060px;
     box-shadow: 0px 0px 2px 2px lightgray;
     height: 45px;
+    z-index: 99;
 }
 .center {
     margin-left: auto;

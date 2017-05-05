@@ -2,7 +2,7 @@ from models.User import User
 from models.SubscriptionConfig import SubscriptionConfig as SBConfig
 from flask import session
 from utils.utils import referrer_url
-from forms.UserSchema import user_schema
+from forms.RegisterSchema import register_schema
 
 valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 email_valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@.-'
@@ -21,7 +21,7 @@ def login(form):
 
 def register(form):
     result = dict(success=False)
-    data = user_schema.load(form)
+    data = register_schema.load(form)
     if data.errors == {}:
         result['success'] = True
         result['referrer'] = referrer_url('index.index')

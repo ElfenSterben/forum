@@ -4,12 +4,6 @@
         <meta charset="utf-8">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{% block title %} {% endblock %} > {{hostname}}</title>
-        <script src="/static/js/jquery-3.0.0.min.js"></script>
-        <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
-        <script src="/static/js/api/base.js"></script>
-        <script src="/static/js/time.js"></script>
-        {% block script %}
-        {% endblock %}
         <!-- CSS -->
         <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
         <!-- Default theme -->
@@ -24,38 +18,46 @@
         {% endblock %}
     </head>
     <body>
-        <div class="header fixed">
-            <div class="titlebar center clearfix">
-                <div class="title">
-                </div>
-                <nav class="">
-                    <a class="nav-item" href="/">首页</a>
-                {% if user is none %}
-                    <a class="nav-item" href="{{url_for('login.login_view')}}">登录/注册</a>
-                {% else %}
-                    <a class="nav-item" href="{{url_for('user.info_view',username=user.username)}}">{{user.username}}</a>
-                    <a class="nav-item" href="{{url_for('notify.notify_view',notify_type='announce')}}">消息({{not_read_count}})</a>
-                    <a class="nav-item" href="{{url_for('user.setting_view')}}">设置</a>
-                    {% if user.id == 1 %}
-                    <a class="nav-item" href="{{url_for('node.node_view')}}">节点管理</a>
+        <div id="id-div-main">
+            <div class="header fixed">
+                <div class="titlebar center clearfix">
+                    <div class="title">
+                    </div>
+                    <nav class="">
+                        <a class="nav-item" href="/">首页</a>
+                    {% if user is none %}
+                        <a class="nav-item" href="{{url_for('login.login_view')}}">登录/注册</a>
+                    {% else %}
+                        <a class="nav-item" href="{{url_for('user.info_view',username=user.username)}}">{{user.username}}</a>
+                        <a class="nav-item" href="{{url_for('notify.notify_view',notify_type='announce')}}">消息({{not_read_count}})</a>
+                        <a class="nav-item" href="{{url_for('user.setting_view')}}">设置</a>
+                        {% if user.id == 1 %}
+                        <a class="nav-item" href="{{url_for('node.node_view')}}">节点管理</a>
+                        {% endif %}
+                        <a class="nav-item" href="{{url_for('logout.logout')}}">退出</a>
                     {% endif %}
-                    <a class="nav-item" href="{{url_for('logout.logout')}}">退出</a>
-                {% endif %}
-                </nav>
+                    </nav>
+                </div>
+            </div>
+            <div class="container">
+                <div class="main">
+                    {% block main %} {% endblock %}
+                </div>
+                <div class="sidebar">
+                    {% block sidebar %} {% endblock %}
+                </div>
+            </div>
+            <div class="footer">
+                <div class="timestamp hidden">
+                    {{ current_time }}
+                </div>
             </div>
         </div>
-        <div class="container">
-            <div class="main">
-                {% block main %} {% endblock %}
-            </div>
-            <div class="sidebar">
-                {% block sidebar %} {% endblock %}
-            </div>
-        </div>
-        <div class="footer">
-            <div class="timestamp hidden">
-                {{ current_time }}
-            </div>
-        </div>
+        <script src="/static/js/jquery-3.0.0.min.js"></script>
+        <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+        <script src="/static/js/api/base.js"></script>
+        <script src="/static/js/time.js"></script>
+        {% block script %}
+        {% endblock %}
     </body>
 </html>

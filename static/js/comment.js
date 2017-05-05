@@ -128,7 +128,7 @@ var replyPagesTemplete = function(data){
     if(currentPage <= 1){
         prePageEnable = 'disabled'
     }
-    else if(currentPage >= pages){
+    if(currentPage >= pages){
         nextPageEnable = 'disabled'
     }
     let prePageBtn = `

@@ -1,6 +1,5 @@
 from marshmallow import Schema, ValidationError, validates, validate
 from marshmallow import fields
-from models.Post import Post
 from models.Node import Node
 from flask import url_for
 

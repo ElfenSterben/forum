@@ -155,9 +155,9 @@ class User(Model, db.Model):
         return email_valid
 
     def change_password_valid(self, form, message):
-        old = form.get('old-password')
-        new = form.get('new-password')
-        confirm = form.get('confirm-password')
+        old = form.get('old_password')
+        new = form.get('new_password')
+        confirm = form.get('confirm_password')
         old_valid = old == self.password
         new_valid = User.password_valid(new, confirm, message)
 
@@ -181,7 +181,7 @@ class User(Model, db.Model):
         valid = self.change_password_valid(form, message)
         r['success'] = valid
         if valid:
-            self.password = form.get('new-password')
+            self.password = form.get('new_password')
         else:
             r['message'] = message
 
