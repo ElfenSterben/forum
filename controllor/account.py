@@ -3,13 +3,15 @@ from models.SubscriptionConfig import SubscriptionConfig as SBConfig
 from flask import session
 from utils.utils import referrer_url
 from forms.RegisterSchema import register_schema
+from forms.LoginSchema import login_schema
 
 valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 email_valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@.-'
 
 def login(form):
-    valid_msg = login_valid(form)
-    valid = valid_msg['valid']
+    data = login_schema.load(form)
+    if data.errors == {}:
+        session['user_id'] = valid_msg['user'].id
     result = dict(
         success=valid,
         message=valid_msg['msg'],

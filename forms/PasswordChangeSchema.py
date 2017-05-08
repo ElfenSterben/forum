@@ -4,7 +4,7 @@ from flask import g
 
 valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 
-class PwdChangeSchema(Schema):
+class PasswordChangeSchema(Schema):
     old_password = fields.Str()
     new_password = fields.Str()
     confirm_password = fields.Str()
@@ -31,4 +31,4 @@ class PwdChangeSchema(Schema):
         if value != self.new_password:
             raise ValidationError('两次输入的密码不一致')
 
-pwd_change_schema = PwdChangeSchema()
+pwd_change_schema = PasswordChangeSchema()
