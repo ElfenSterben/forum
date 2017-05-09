@@ -8,7 +8,7 @@ main = Blueprint('index', __name__)
 
 @main.route('/')
 def index():
-    data = post.page('1')
+    data = post.page('1', 'all')
     return render_template('index.html', **data)
 
 @main.route('/<string:node_name>')

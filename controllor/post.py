@@ -2,6 +2,8 @@ from flask import url_for, g, abort, request, current_app
 from models.Post import Post
 from models.Node import Node
 from forms.PostSchema import post_schema
+from forms.NodeSchema import node_schema, node_schemas
+from forms.UserSchema import user_schema
 from services.NotifyService import notify_service, TARGET_TYPE, REASON_TYPE
 
 
@@ -17,28 +19,46 @@ def add(form):
     result['message'] = res.errors
     return result
 
-def page(p, node=None):
+def page(p, node_name=None):
     if not p.isdigit():
         p = '1'
     page = int(p)
     pre_page = current_app.config.get('POST_PRE_PAGE', 20)
-    if node is None:
+    node = Node.query.filter_by(name=node_name).first()
+    nl = Node.query.order_by(Node.edited_time).all()
+    node_list = node_schema.dump(nl, many=True).data
+    result = dict(
+        success=True,
+        node_list=node_list,
+        selected_node=node_name,
+    )
+    if node_name != 'all' and node is None:
+        result['success'] = False
+        result['message'] = {
+            'node': ['节点不存在'],
+        }
+        return result
+    if node_name == 'all':
         query = Post.query
     else:
-        node = Node.query.filter_by(name=node).first()
-        if node is None:
-            abort(404)
         query = node.posts
-    paginate = query.order_by(Post.created_time.desc()).paginate(page, pre_page, False)
+    paginate = query.order_by(Post.edited_time.desc()).paginate(page, pre_page, False)
     post_list = paginate.items
-    node_list = Node.query.all()
-    data = {
-        'post_list': post_list,
-        'paginate': paginate,
-        'node_list': node_list,
-        'selected_node': node,
-    }
-    return data
+    pl = []
+    for p in post_list:
+        _data = dict(
+            post=post_schema.dump(p),
+            user=user_schema.dump(p.user),
+            node=node_schema.dump(p.node)
+        )
+        pl.append(_data)
+    data = dict(
+        current_page=paginate.page,
+        pages=paginate.pages,
+        post_list=pl,
+    )
+    result['data'] = data
+    return result
 
 def view(post_id, comment_page):
     p = Post.query.get(post_id)

@@ -7,7 +7,7 @@ class PostSchema(Schema):
     id = fields.Int(dump_only=True)
     created_time = fields.Time(dump_only=True)
     edited_time = fields.Time(dump_only=True)
-    title = fields.Str(required=True, validate=validate.Length(min=2, max=200, error='标题长度(2-30)个字符'))
+    title = fields.Str(required=True, validate=validate.Length(min=2, max=200, error='标题长度(2-200)个字符'))
     content = fields.Str(required=True, validate=validate.Length(min=10, max=1000, error='内容长度(10-1000)个字符'))
     node_id = fields.Int(required=True, error='节点类型错误')
     url = fields.Method(method_name='post_url', dump_only=True)
@@ -22,3 +22,4 @@ class PostSchema(Schema):
             raise ValidationError('节点不存在')
 
 post_schema = PostSchema()
+post_schemas = PostSchema(many=True)

@@ -74,3 +74,16 @@ def referrer_url(endpoint, **values):
     if is_nothing(target) or not is_safe_url(target):
         target = url_for(endpoint, **values)
     return target
+
+def is_ulalnum(s):
+    '''
+    判断字符串是否由下划线, 字母, 数字, 组成
+    :param s: 
+    :return: 
+    '''
+    _tmp = s.split('_')
+    _tmp = ''.join(_tmp)
+    return _tmp.isalnum()
+
+def check_len(s, min, max):
+    return min <= len(s) <= max

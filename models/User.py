@@ -32,6 +32,12 @@ class User(Model, db.Model):
         self.email = form.get('email').strip()
         self.created_time = timestamp()
 
+    def update(self, form):
+        for k in form:
+            if hasattr(self, k):
+                setattr(self, k, form[k])
+        self._update()
+
     @classmethod
     def view(cls, username):
         data = {}
@@ -165,16 +171,6 @@ class User(Model, db.Model):
             message['.old-psw-message'] = '请输入当前密码'
 
         return new_valid and old_valid
-
-    def setting(self, form, r):
-        message = {}
-        valid = self.setting_valid(form, message)
-        r['success'] = valid
-        if valid:
-            self.email = form.get('email')
-            self.save()
-        else:
-            r['message'] = message
 
     def change_password(self, form, r):
         message = {}

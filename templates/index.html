@@ -8,66 +8,65 @@
 {% endblock %}
 {% block main %}
 <div class="div-node-all">
-    <a class="node-item {% if selected_node is none %}node-selected{% endif %}" href="/">All</a>
+    <a class="node-item {% if selected_node == 'all' %}node-selected{% endif %}" href="/">All</a>
     {% for n in node_list %}
         <a class="node-item
-    {% if selected_node is not none and n.name == selected_node.name%}
+    {% if n['name'] == selected_node %}
         node-selected
     {% endif %}
-        " href="/{{n.name}}">{{n.name}}</a>
+        " href="{{url_for('index.node_index', node_name=n['name'])}}">{{n['name']}}</a>
     {% endfor %}
 </div>
 <div class="div-post-list">
-    {% if post_list == [] %}
+{% if not success %}
+    {{ message['node'][0] }}
+{% else %}
+    {% if data['post_list'] == [] %}
     <div class="no-post">
-        <a class="btn-new-post" href="/post/new">创建一个新主题>></a>
+        <a class="btn-new-post" href="{{url_for('post.new')}}">创建一个新主题>></a>
     </div>
     {% else %}
-    {% for p in post_list %}
+        {% for p in data['post_list'] %}
         <div class="post-item inner-box clearfix">
             <div class="post-user-avatar float-left">
-                <img class="img-middle" src="{{p.user.avatar}}" alt="" />
+                <img class="img-middle" src="{{p['user']['avatar']}}" alt="" />
             </div>
             <div class="post-item-right float-left">
                 <div class="post-title">
-                    <a class="my-link" href="{{url_for('post.view', post_id=p.id)}}">{{p.title}}</a>
+                    <a class="my-link" href="{{url_for('post.view', post_id=p['id'])}}">{{p['title']}}</a>
                 </div>
                 <div class="post-info">
                     <small>
-                        <a class="link-node" href="/{{p.node.name}}">{{p.node.name}}</a>
+                        <a class="link-node" href="{{url_for('index', p['node']['name'])}}">{{p['node']['name']}}</a>
                         <span>&nbsp;•&nbsp;</span>
-                        <a class="my-link" href="{{url_for('user.info_view',username=p.user.username)}}">{{p.user.username}}</a>
+                        <a class="my-link" href="{{url_for('user.info_view',username=p['user']['username'])}}">{{p['user']['username']}}</a>
                         <span>&nbsp;•&nbsp;</span>
-                        <time>{{p.created_time}}</time>
+                        <time>{{p['created_time']}}</time>
                         <span>发布</span>
                     </small>
                 </div>
             </div>
         </div>
-    {% endfor %}
+        {% endfor %}
     <div class="div-pages">
         <div class="center">
-            {% if paginate.has_prev %}
-            <a class="page_button" href="{{ url_for('index.index', page=paginate.prev_num) }}">上一页</a>
+            {% if current_page > 1 %}
+            <a class="page_button" href="{{ url_for('index.index', page=data['current_page']-1) }}">上一页</a>
             {% endif %}
-            {% for n in paginate.iter_pages(1,2,2,1)%}
-            {% if n == paginate.page %}
+                {% for n in range(1, data['pages'] + 1)%}
+                    {% if n == data['current_page'] %}
                 <a class="page_num page_selected">{{ n }}</a>
-            {% else %}
-                {% if n is none%}
-                <span class="page_num">...</span>
-                {%else%}
-                <a class="page_num" href="{{ url_for('index.index', page=n)}}">{{ n }}</a>
-                {% endif %}
-            {% endif %}
-            {% endfor %}
-            {% if paginate.has_next %}
-            <a class="page_button" href="{{ url_for('index.index', page=paginate.next_num) }}">下一页</a>
+                    {% else %}
+                <a class="page_num" href="{{ url_for('index.index', page=n) }}">{{ n }}</a>
+                    {% endif %}
+                {% endfor %}
+            {% if data['current_page'] < data['pages'] %}
+            <a class="page_button" href="{{ url_for('index.index', page=data['current_page'] + 1) }}">下一页</a>
             {% endif %}
         </div>
-
     </div>
     {% endif %}
+{% endif %}
 </div>
 
 {% endblock %}

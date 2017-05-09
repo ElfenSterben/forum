@@ -1,30 +1,30 @@
 
 var btnOnUpdatePost = function(e){
-    let msgMapping = {
+    var msgMapping = {
             'title': '.post-title-message',
             'content': '.post-content-message',
             'node_id': '.post-node-message'
         }
-    let btn = e.target
-    let box = $(btn).closest('.div-post-form')
-    let title = $(box).find('.input-post-title').first().val()
-    let content = $(box).find('.input-post-content').first().val()
-    let node_id = $(box).find('.select-node').first().val()
-    let sendData = {
+    var btn = e.target
+    var box = $(btn).closest('.div-post-form')
+    var title = $(box).find('.input-post-title').first().val()
+    var content = $(box).find('.input-post-content').first().val()
+    var node_id = $(box).find('.select-node').first().val()
+    var sendData = {
         'title': title,
         'content': content,
         'node_id': node_id
     }
-    let response = function(r){
+    var response = function(r){
         if (r.success){
-                let data = r.data
-                window.location.href = data.url
+            var data = r.data
+            window.location.href = data.url
         }
         else{
-            let message = r.message
-            for (let k in message){
-                let c = msgMapping[k]
-                let p_message = $(box).find(c).first()
+            var message = r.message
+            for (var k in message){
+                var c = msgMapping[k]
+                var p_message = $(box).find(c).first()
                 p_message.text(message[k][0])
                 p_message.addClass('error')
             }
@@ -33,14 +33,12 @@ var btnOnUpdatePost = function(e){
     api.postAdd(sendData, response)
 }
 
-
-
-var bindEvents = function(){
+var editPostBindEvents = function(){
     $('.btn-post-add').on('click', btnOnUpdatePost)
 }
 
 var __main = function(){
-    bindEvents()
+    editPostBindEvents()
 }
 
 $(document).ready(__main)

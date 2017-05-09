@@ -1,7 +1,7 @@
 var api = {}
 api._ajax = function(url, method, data, contentType, callback){
-    let csrfToken = $('meta[name=csrf-token]').attr('content')
-    let request = {
+    var csrfToken = $('meta[name=csrf-token]').attr('content')
+    var request = {
         url: url,
         type: method,
         contentType: contentType,
@@ -11,7 +11,7 @@ api._ajax = function(url, method, data, contentType, callback){
             callback(response)
         },
         error: function(err){
-            let r = {
+            var r = {
                 'success': false,
                 'message': {'.message':'网络错误'}
             }
@@ -22,7 +22,7 @@ api._ajax = function(url, method, data, contentType, callback){
 }
 
 api.ajax = function(url, method, data, callback){
-    let contentType = "application/json; charset=utf-8"
+    var contentType = "application/json; charset=utf-8"
     api._ajax(url, method, data, contentType, callback)
 }
 
@@ -34,4 +34,24 @@ api.get = function(url, data, callback){
     api.ajax(url, 'get', data, callback)
 }
 
- var base_url = '/'
+var log = console.log.bind(console)
+
+var inputChange = function(e){
+    var input = e.target
+    var td = input.closest('td')
+    var p_message = $(td).find('.message').first()
+    p_message.removeClass('error')
+}
+
+var baseBindEvents = function() {
+    $('input').on('input', inputChange)
+}
+
+var base_url = '/'
+
+
+var __main = function() {
+    baseBindEvents()
+}
+
+$(document).ready(__main)

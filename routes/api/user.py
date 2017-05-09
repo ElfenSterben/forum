@@ -4,24 +4,21 @@ from PIL import Image
 from utils.utils import save_avatar, remove_avatar, crop_img
 from flask import current_app
 import time
+from controllor.account import setting, change_password
 
 @main.route('/user/change/info', methods=['post'])
 @user_required
 def update_info():
-    r = {}
     s_json = request.get_json()
-    u = g.user
-    u.setting(s_json, r)
-    return jsonify(r)
+    result = setting(s_json)
+    return jsonify(result)
 
 @main.route('/user/change/password', methods=['post'])
 @user_required
 def update_password():
-    r = {}
     p_json = request.get_json()
-    g.user.change_password(p_json, r)
-    return jsonify(r)
-
+    result = change_password(p_json)
+    return jsonify(result)
 
 @main.route('/upload/avatar', methods=['post'])
 @user_required

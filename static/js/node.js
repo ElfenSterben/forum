@@ -1,5 +1,5 @@
 var nodeTemplate = function(n){
-    let n = `
+    var n = `
     <div class="node-box">
         <div class="node-item" data-id="${n.id}">
             <div class="node-title">
@@ -18,15 +18,15 @@ var nodeTemplate = function(n){
 }
 
 var btnOnNewNode = function(e){
-    let btn = e.target
-    let box = $(btn).closest('.node-input-box')
-    let name = $(box).find('.input-node-content').first().val()
-    let description = $(box).find('.input-node-description').first().val()
-    let form = {
+    var btn = e.target
+    var box = $(btn).closest('.node-input-box')
+    var name = $(box).find('.input-node-content').first().val()
+    var description = $(box).find('.input-node-description').first().val()
+    var form = {
         'name': name,
         'description': description
     }
-    let response = function(r){
+    var response = function(r){
         if (r.success){
             n = r.data
             $('.node-lists').prepend(nodeTemplate(n))
@@ -39,14 +39,14 @@ var btnOnNewNode = function(e){
 }
 
 var btnOnDeleteNode = function(e){
-    let btn = e.target
-    let item = $(btn).closest('.node-item')
-    let box = $(item).closest('.node-box')
-    let id = $(item).data('id')
-    let form = {
+    var btn = e.target
+    var item = $(btn).closest('.node-item')
+    var box = $(item).closest('.node-box')
+    var id = $(item).data('id')
+    var form = {
         'id': id
     }
-    let response = function(r){
+    var response = function(r){
         if (r.success){
             box.remove()
             alert('删除成功')
@@ -58,13 +58,13 @@ var btnOnDeleteNode = function(e){
     api.nodeDelete(form, response)
 }
 
-var bindEvents = function(){
+var nodeBindEvents = function(){
     $('.node-new').on('click', btnOnNewNode)
     $('.node-lists').on('click', '.node-delete', btnOnDeleteNode)
 }
 
 var __main = function(){
-    bindEvents()
+    nodeBindEvents()
 }
 
 $(document).ready(__main);

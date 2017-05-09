@@ -9,10 +9,10 @@ valid_str = '1234567890_qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
 
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
-    username = fields.Str(allow_none=True)
+    username = fields.Str(required=True)
     avatar = fields.Str(dump_only=True)
     password = fields.Str(required=True, load_only=True)
-    created_time = fields.Time(dump_only=True)
+    created_time = fields.Raw(dump_only=True)
     url = fields.Method(method_name='user_url', dump_only=True)
 
     def user_url(self, user):
