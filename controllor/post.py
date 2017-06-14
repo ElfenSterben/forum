@@ -1,4 +1,5 @@
 from flask import url_for, g, abort, request, current_app
+from lxml.html.clean import clean_html
 from models.Post import Post
 from models.Node import Node
 from forms.PostSchema import post_schema
@@ -47,9 +48,9 @@ def page(p, node_name=None):
     pl = []
     for p in post_list:
         _data = dict(
-            post=post_schema.dump(p),
-            user=user_schema.dump(p.user),
-            node=node_schema.dump(p.node)
+            post=post_schema.dump(p).data,
+            user=user_schema.dump(p.user).data,
+            node=node_schema.dump(p.node).data
         )
         pl.append(_data)
     data = dict(
@@ -77,18 +78,34 @@ def view(post_id, comment_page):
     }
     return data
 
-def edit(post_id):
-    p = Post.query.get(post_id)
-    if p is None:
-        abort(404)
-    valid = p.permission_valid(g.user)
-    if not valid:
-        abort(403)
+def edit(post_id=None):
     node_list = Node.query.filter_by(hidden=False)
-    data = dict(
-        node_list=node_list,
-        post=p,
-    )
+    if post_id is None:
+        data = dict(
+            node_list=node_list,
+            post=dict(
+                id='',
+                title='',
+                content='',
+                created_time='',
+            ),
+            author={},
+            node=dict(
+                id='',
+            )
+        )
+    else:
+        p = Post.query.get(post_id)
+        if p is None:
+            abort(404)
+        valid = p.permission_valid(g.user)
+        if not valid:
+            abort(403)
+        data = dict(
+            node_list=node_list,
+            post=post_schema.dump(p).data,
+            node=node_schema.dump(p.node).data
+        )
     return data
 
 def update(post_id, form):

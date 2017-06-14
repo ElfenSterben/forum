@@ -29,7 +29,7 @@ a{
     min-width: 1060px;
     box-shadow: 0px 0px 2px 2px lightgray;
     height: 45px;
-    z-index: 99;
+    z-index: 99999;
 }
 .center {
     margin-left: auto;
@@ -83,7 +83,7 @@ nav{
     float: left;
 }
 .box {
-    margin: 0px 10px;
+    margin: 0px 0px;
     padding:10px;
     background-color: white;
 }

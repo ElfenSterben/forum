@@ -2,19 +2,36 @@
     background-color: white;
     padding: 20px;
 }
+
 .font-size-16{
     font-size: 16px;
 }
+
 .input-post-title{
-    width: 95%;
+    width: 100%;
     padding: 5px;
     font-size: 20px;
-    border-radius: 5px;
-    border: 1px solid gray;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
+
 .post-content{
     margin: 10px 0px;
 }
+
+div.post-editor-toolbar {
+    border: 1px solid #ccc;
+    display: block;
+}
+.post-editor-toolbar>* {
+    float: left;
+}
+
+.post-editor-input {
+    border: 1px solid #ccc;
+    height: 400px;
+}
+
 .input-post-content{
     resize: none;
     width: 95%;
@@ -23,14 +40,17 @@
     border-radius: 5px;
     border: 1px solid gray;
 }
+
 .post-node{
     margin: 20px 0px;
 }
+
 .select-node{
     width: 150px;
     border-radius: 5px;
     padding: 5px;
 }
+
 .btn{
     background-color: lightsalmon;
     border: none;
@@ -40,6 +60,7 @@
     margin: 5px;
     outline: none;
 }
+
 .btn:hover {
     background-color: #ffb698;
     cursor: pointer;

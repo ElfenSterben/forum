@@ -5,8 +5,8 @@ from flask import url_for
 
 class NodeSchema(Schema):
     id = fields.Int(dump_only=True)
-    created_time = fields.Time(dump_only=True)
-    edited_time = fields.Time(dump_only=True)
+    created_time = fields.Raw(dump_only=True)
+    edited_time = fields.Raw(dump_only=True)
     name = fields.Str()
     description = fields.Str(allow_none=True)
 

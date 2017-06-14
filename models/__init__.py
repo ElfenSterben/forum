@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
 from flask import url_for
+from lxml.html.clean import clean_html
 import time
 
 db = SQLAlchemy()

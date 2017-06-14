@@ -20,16 +20,17 @@ class Post(Model, db.Model):
         self.created_time = timestamp()
         self.edited_time = timestamp()
         self.user = g.user
-        self.title = form.get('title', '')
-        self.content = form.get('content', '')
-        self.node_id = form.get('node_id')
+        self.fill(form)
 
     def update(self, form):
         self.edit_time = timestamp()
-        self.title = form.get('title')
-        self.content = form.get('content')
-        self.node_id = form.get('node_id')
+        self.fill(form)
         self._update()
+
+    def fill(self, form):
+        self.title = form.get('title', '')
+        self.content = clean_html(form.get('content', ''))
+        self.node_id = form.get('node_id')
 
     def permission_valid(self, u):
         return u.username == self.user.username

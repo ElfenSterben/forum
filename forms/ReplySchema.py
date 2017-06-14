@@ -8,7 +8,7 @@ class ReplySchema(Schema):
     comment_id = fields.Int(required=True, error='评论不存在,刷新后再试')
     content = fields.Str(validate=validate.Length(min=1, max=200, error='内容长度(1-200)个字符'))
     receiver_name = fields.Str(load_only=True, allow_none=True)
-    created_time = fields.Time(dump_only=True)
+    created_time = fields.Raw(dump_only=True)
 
     @validates('comment_id')
     def validate_comment_id(self, value):

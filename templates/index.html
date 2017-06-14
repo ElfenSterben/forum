@@ -33,15 +33,15 @@
             </div>
             <div class="post-item-right float-left">
                 <div class="post-title">
-                    <a class="my-link" href="{{url_for('post.view', post_id=p['id'])}}">{{p['title']}}</a>
+                    <a class="my-link" href="{{url_for('post.view', post_id=p['post']['id'])}}">{{p['post']['title']}}</a>
                 </div>
                 <div class="post-info">
                     <small>
-                        <a class="link-node" href="{{url_for('index', p['node']['name'])}}">{{p['node']['name']}}</a>
+                        <a class="link-node" href="{{url_for('index.node_index', node_name=p['node']['name'])}}">{{p['node']['name']}}</a>
                         <span>&nbsp;•&nbsp;</span>
                         <a class="my-link" href="{{url_for('user.info_view',username=p['user']['username'])}}">{{p['user']['username']}}</a>
                         <span>&nbsp;•&nbsp;</span>
-                        <time>{{p['created_time']}}</time>
+                        <time>{{p['post']['created_time']}}</time>
                         <span>发布</span>
                     </small>
                 </div>
@@ -50,7 +50,7 @@
         {% endfor %}
     <div class="div-pages">
         <div class="center">
-            {% if current_page > 1 %}
+            {% if data['current_page'] > 1 %}
             <a class="page_button" href="{{ url_for('index.index', page=data['current_page']-1) }}">上一页</a>
             {% endif %}
                 {% for n in range(1, data['pages'] + 1)%}

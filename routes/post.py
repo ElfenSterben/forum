@@ -7,7 +7,7 @@ main = Blueprint('post', __name__)
 @main.route('/new')
 @user_required
 def new():
-    data = Node.user_list()
+    data = post.edit()
     return render_template('add_post.html', **data)
 
 @main.route('/<int:post_id>')
@@ -20,7 +20,7 @@ def view(post_id):
 @user_required
 def edit(post_id):
     data = post.edit(post_id)
-    return render_template('edit_post.html', **data)
+    return render_template('add_post.html', **data)
 
 @main.route('/delete/<int:post_id>')
 @user_required
