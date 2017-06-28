@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+    添加新帖
+{% endblock %}
+
+{% block css%}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/handle_post.css">
+<link rel="stylesheet" href="/static/css/ESMarkDown.css">
+{% endblock %}
+
+{% block container %}
+<div class="div-post-form" data-id="{{post['id']}}" data-mode="{{mode}}">
+    <div class="post-title">
+        <span>标题</span>
+        <span class="post-title-message message">
+            标题请输入2-30个字符
+        </span>
+        <input class="input-post-title" type="text" name="title" value="{{post['title']}}">
+    </div>
+    <div class="post-content">
+        <span>内容</span>
+        <span class="post-content-message message">
+            内容请输入10-1000个字符
+        </span>
+        <div id="id-div-editor" class="post-editor">
+            {{post['content']}}
+        </div>
+    </div>
+    <div class="footer clear-fix">
+        <div class="post-node float-left">
+            <span>节点选择</span>
+            <select class="select-node font-size-16" name="node_id">
+                {% for n in node_list%}
+                {% if n['id'] == node['id'] %}
+                <option value ="{{ n.id }}" selected>{{ n['name'] }}</option>
+                {% else %}
+                    <option value ="{{n.id}}">{{n['name']}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <span class="post-node-message message">
+            </span>
+        </div>
+        <div class="post-action float-right">
+            <button class="btn btn-submit-post" type="submit">提交</button>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/js/highlight.pack.js"></script>
+<script src="/static/js/remarkable.min.js"></script>
+<script type="text/javascript" src="/static/js/api/util.js"></script>
+<script type="text/javascript" src="/static/js/ESMarkDown.js"></script>
+<script src="/static/js/api/handlePost.js"></script>
+<script src="/static/js/handlePost.js"></script>
+{% endblock %}

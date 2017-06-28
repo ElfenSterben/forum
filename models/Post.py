@@ -29,7 +29,7 @@ class Post(Model, db.Model):
 
     def fill(self, form):
         self.title = form.get('title', '')
-        self.content = clean_html(form.get('content', ''))
+        self.content = form.get('content', '')
         self.node_id = form.get('node_id')
 
     def permission_valid(self, u):

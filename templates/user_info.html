@@ -11,7 +11,7 @@
 
 {% block main %}
     <div class="check-user-profile box">
-        <div class="profile-top clearfix">
+        <div class="profile-top clear-fix">
             <div class="profile-top-left float-left">
                 <div class="avatar">
                     <img class="img-big" src="{{view_user.avatar}}" alt="" />
@@ -58,7 +58,7 @@
         </div>
         {% for c in view_user.comments %}
         <div class="comment-item shandow underline-gray">
-            <div class="comment-post user-comment-padding clearfix bg-gray">
+            <div class="comment-post user-comment-padding clear-fix bg-gray">
                 <span>>>&nbsp;&nbsp;回复了 {{c.post.user.username}} 的主题</span>
                 <span>></span>
                 <a class="my-link" href="{{url_for('post.view',post_id=c.post.id)}}">{{c.post.title}}</a>

@@ -8,11 +8,11 @@
 {% endblock %}
 {% block main %}
 <div class="div-node-all">
-    <a class="node-item {% if selected_node == 'all' %}node-selected{% endif %}" href="/">All</a>
+    <a class="btn btn-tiny {% if selected_node == 'all' %}active{% endif %}" href="/">All</a>
     {% for n in node_list %}
-        <a class="node-item
+        <a class="btn btn-tiny
     {% if n['name'] == selected_node %}
-        node-selected
+        active
     {% endif %}
         " href="{{url_for('index.node_index', node_name=n['name'])}}">{{n['name']}}</a>
     {% endfor %}
@@ -27,7 +27,7 @@
     </div>
     {% else %}
         {% for p in data['post_list'] %}
-        <div class="post-item inner-box clearfix">
+        <div class="post-item inner-box clear-fix">
             <div class="post-user-avatar float-left">
                 <img class="img-middle" src="{{p['user']['avatar']}}" alt="" />
             </div>

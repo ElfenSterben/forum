@@ -1,21 +1,21 @@
-*{
+@charset "utf-8";
+body {
+    /* opacity: 0; */
     margin: 0px;
     padding: 0px;
-}
-body{
-    /* opacity: 0; */
     background-color: #e4e4e4;
 }
-a{
+a {
     text-decoration: none;
     color: #5b5b5b;
 }
+
 .my-link:hover{
     text-decoration: underline;
     color: black;
     cursor: pointer;
 }
-.clearfix:after{
+.clear-fix:after{
     clear: both;
     content: '';
     display: block;
@@ -42,6 +42,7 @@ a{
     max-width: 1300px;
     min-width: 960px;
 }
+
 .container {
     position: relative;
     min-width: 960px;
@@ -86,23 +87,6 @@ nav{
     margin: 0px 0px;
     padding:10px;
     background-color: white;
-}
-.btn{
-    display: inline-block;
-    background-color: lightsalmon;
-    border: none;
-    font-size: 20px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 5px;
-    outline: none;
-}
-.btn:hover {
-    background-color: #ffb698;
-    cursor: pointer;
-}
-.btn:active{
-    background-color: #ff723a;
 }
 .inner-box{
     border-bottom: 1px solid lightgray;

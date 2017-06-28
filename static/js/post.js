@@ -7,7 +7,7 @@ var commentTemplate = function(d){
 
     var t = `
     <div id="id-comment-${c.id}" class="comment-item inner-box" data-commentid="${c.id}">
-            <div class="comment-body clearfix">
+            <div class="comment-body clear-fix">
                 <div class="comment-user-avatar float-left">
                     <img class="img-middle" src="${u.avatar}" alt="" />
                 </div>
@@ -21,7 +21,7 @@ var commentTemplate = function(d){
                     </div>
                 </div>
             </div>
-            <div class="comment-action clearfix">
+            <div class="comment-action clear-fix">
                 <p class="reply-view-message"></p>
                 <a class="my-link btn-reply-view not-view float-right">展开回复</a>
             </div>
@@ -234,7 +234,7 @@ var btnOnNewReply = function(e){
     api.replyAdd(form, response)
 }
 
-var btnOnReplySomeOne = function(e){
+var btnOnReplySomeOne = function(e) {
     var btn = e.target
     var box = $(btn).closest('.reply-view')
     var item = $(btn).closest('.reply-item')
@@ -247,7 +247,42 @@ var btnOnReplySomeOne = function(e){
     input.focus()
 }
 
-var commentBindEvents = function(){
+var remarkContent = function() {
+    var settings = {
+        html: false,
+        xhtmlOut: false,
+        breaks: false,
+        langPrefix: 'language-',
+        linkTarget: 'blank',
+        typographer: true,
+        highlight: (str, lang) => {
+            if (!window.hljs) {
+                return '';
+            }
+            var hljs = window.hljs;
+            if (lang && hljs.getLanguage(lang.toLowerCase())) {
+                try {
+                    return hljs.highlight(lang.toLowerCase(), str).value;
+                } catch (__) {
+                }
+            }
+            try {
+                return hljs.highlightAuto(str).value;
+            } catch (__) {
+            }
+            return ''
+        }
+    }
+    var md = new Remarkable('full', settings)
+    var input = e('.post-body')
+    var source = input.innerHTML.trim()
+    var textarea = document.createElement('textarea')
+    textarea.innerHTML = source
+    var view = md.render(textarea.value)
+    input.innerHTML = view
+}
+
+var commentBindEvents = function() {
     $('.btn-new-comment').on('click', btnOnNewComment)
     $('.comment-list').on('click', '.btn-reply-view', btnOnViewReplies)
     $('.comment-list').on('click', '.reply-page', btnOnPageReplies)
@@ -257,6 +292,7 @@ var commentBindEvents = function(){
 
 var __main = function(){
     commentBindEvents()
+    remarkContent()
 }
 
 $(document).ready(__main)

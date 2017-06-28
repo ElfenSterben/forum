@@ -34,8 +34,6 @@ api.get = function(url, data, callback){
     api.ajax(url, 'get', data, callback)
 }
 
-var log = console.log.bind(console)
-
 var inputChange = function(e){
     var input = e.target
     var td = input.closest('td')

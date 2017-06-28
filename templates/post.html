@@ -7,11 +7,13 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href="/static/css/post.css">
+<link rel="stylesheet" href="/static/css/ESMarkDown.css">
 {% endblock %}
 
 {% block script %}
-<script src="/static/js/api/comment.js"></script>
-<script src="/static/js/comment.js"></script>
+<script src="/static/js/remarkable.min.js"></script>
+<script src="/static/js/api/post.js"></script>
+<script src="/static/js/post.js"></script>
 {% endblock %}
 
 {% block main %}
@@ -39,15 +41,16 @@
             </div>
         </div>
         <div class="post-body">
-            {{post.content | safe}}
+            {{post.content}}
         </div>
-        <div class="post-footer">
+        <div class="post-footer clear-fix">
             {% if post.user_id == user.id %}
-            <form action="{{ url_for('post.delete', post_id=post.id) }}">
+            <form class="float-right" action="{{ url_for('post.delete', post_id=post.id) }}">
                 <input type="hidden" value="{{ csrf_token() }}">
-                <button type="submit">删除</button>
+                <button class="btn btn-tiny" type="submit">删除</button>
+                <a class="btn btn-tiny" href="{{ url_for('post.edit', post_id=post.id) }}">编辑</a>
             </form>
-            <a href="{{ url_for('post.edit', post_id=post.id) }}">编辑</a>
+
             {% endif %}
         </div>
     </div>
@@ -61,7 +64,7 @@
         <div class="comment-list">
             {% for c in post_comments %}
             <div id="id-comment-{{ c.id }}" class="comment-item inner-box" data-commentid="{{ c.id }}">
-                <div class="comment-body clearfix">
+                <div class="comment-body clear-fix">
                     <div class="comment-user-avatar float-left">
                         <img class="img-middle" src="{{c.user.avatar}}" alt="" />
                     </div>
@@ -75,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="comment-action clearfix">
+                <div class="comment-action clear-fix">
                     <p class="reply-view-message"></p>
                     <a class="my-link btn-reply-view not-view float-right">展开回复</a>
                 </div>
@@ -123,7 +126,7 @@
         {% if user is none%}
             <span>请<a class="btn" href="{{url_for('login.login_view')}}">登录</a>后再评论</span>
         {% else %}
-        <div class="comment-input-header inner-box clearfix">
+        <div class="comment-input-header inner-box clear-fix">
             <a class="float-right" href="#top">↑回到顶部</a>
             <p>
                 添加一条新评论
@@ -134,7 +137,7 @@
             <p class="comment-message message"> <p>
             <button class="btn btn-new-comment" type="button">评论</button>
         </div>
-        <div class="comment-input-footer inner-box clearfix">
+        <div class="comment-input-footer inner-box clear-fix">
             <a class="my-link float-right" href="/">←{{hostname}}</a>
         </div>
         {% endif %}

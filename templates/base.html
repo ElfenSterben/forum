@@ -5,14 +5,15 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{% block title %} {% endblock %} > {{hostname}}</title>
         <!-- CSS -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
+        <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>-->
         <!-- Default theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/default.min.css"/>
+        <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/default.min.css"/>-->
         <!-- Semantic UI theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/semantic.min.css"/>
+        <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/semantic.min.css"/>-->
         <!-- Bootstrap theme -->
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>
+        <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>-->
         <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/btn.css">
 
         {% block css %}
         {% endblock %}
@@ -20,7 +21,7 @@
     <body>
         <div id="id-div-main">
             <div class="header fixed">
-                <div class="titlebar center clearfix">
+                <div class="titlebar center clear-fix">
                     <div class="title">
                     </div>
                     <nav class="">
@@ -40,12 +41,14 @@
                 </div>
             </div>
             <div class="container">
+                {% block container %}
                 <div class="main">
                     {% block main %} {% endblock %}
                 </div>
                 <div class="sidebar">
                     {% block sidebar %} {% endblock %}
                 </div>
+                {% endblock%}
             </div>
             <div class="footer">
                 <div class="timestamp hidden">
@@ -54,8 +57,9 @@
             </div>
         </div>
         <script src="/static/js/jquery-3.0.0.min.js"></script>
-        <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+        <!--<script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>-->
         <script src="/static/js/api/base.js"></script>
+        <script src="/static/js/api/util.js"></script>
         <script src="/static/js/time.js"></script>
         {% block script %}
         {% endblock %}

@@ -1,0 +1,300 @@
+html, body{
+    margin: 0px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    color: #000000;
+    font-size: 28px;
+}
+
+h2 {
+    border-bottom: 2px solid #CCCCCC;
+    color: #000000;
+    font-size: 24px;
+}
+
+h3 {
+    border-bottom: 2px solid #CCCCCC;
+    font-size: 18px;
+}
+
+h4 {
+    margin: 16px 0px;
+    font-size: 16px;
+}
+
+h5 {
+    margin: 14px 0px;
+    font-size: 14px;
+}
+
+h6 {
+    color: #777777;
+    background-color: inherit;
+    margin: 14px 0px;
+    font-size: 14px;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+    margin: 15px 0;
+}
+
+p{
+    margin:1em 0;
+}
+
+pre, code {
+    color: #dcdcdc;
+    background-color: #3f3f3f;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+}
+
+pre {
+    overflow: auto;
+    padding: 5px;
+}
+
+pre code {
+    background-color: #3f3f3f;
+    border: none;
+    padding: 0;
+}
+
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    padding: 0 0.2em;
+    line-height: 1;
+}
+
+pre > code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*a{ color: #0645ad; text-decoration:none;}*/
+/*a:visited{ color: #0b0080; }*/
+/*a:hover{ color: #06e; }*/
+/*a:active{ color:#faa700; }*/
+/*a:focus{ outline: thin dotted; }*/
+/*a:hover, a:active{ outline: 0; }*/
+
+::-moz-selection{background:yellow;color:#000}
+::selection{background:yellow;color:#000}
+
+/*a::-moz-selection{background:yellow;color:#0645ad}*/
+/*a::selection{background:yellow;color:#0645ad}*/
+
+blockquote{
+    color:#666666;
+    margin:0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+}
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; max-width:100%;}
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+.table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > th, .table > caption + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > td, .table > thead:first-child > tr:first-child > td {
+    border-top: 0;
+}
+.table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #f9f9f9;
+}
+
+th {
+    text-align: left;
+    font-weight: bold;
+}
+
+
+.es-markdown-editor {
+    margin: auto;
+    min-width: 800px;
+    color:#444;
+    background: #fefefe;
+    box-sizing: border-box;
+    height: 400px;
+}
+
+.editor-font {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    font-size: 13px;
+    line-height: 1.5em;
+}
+
+.border-radius {
+    border-radius: 3px;
+}
+
+.editor-menu{
+    width: 100%;
+    height: 50px;
+}
+
+.editor-input-area {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.editor-box {
+    box-sizing: border-box;
+    border: 1px solid lightgray;
+    box-shadow:inset -1px 1px 10px 0 #BDBDBD;
+}
+
+.eidtor-input {
+    width: 50%;
+    height: 100%;
+}
+
+.editor-textarea {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+
+    resize: none;
+    outline: none;
+}
+
+.editor-textarea:hover{
+    outline: none;
+}
+
+.editor-preview {
+    margin-left: 10px;
+    padding: 0px 10px;
+    width: 50%;
+    height: 100%;
+
+    overflow: auto;
+}
+
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #98c379;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}

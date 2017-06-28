@@ -51,25 +51,6 @@ div.post-editor-toolbar {
     padding: 5px;
 }
 
-.btn{
-    background-color: lightsalmon;
-    border: none;
-    font-size: 20px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 5px;
-    outline: none;
-}
-
-.btn:hover {
-    background-color: #ffb698;
-    cursor: pointer;
-}
-.btn:active {
-    background-color: #ff9c74;
-    cursor: pointer;
-}
-
 .btn-post-add{
     float: right;
 }

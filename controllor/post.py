@@ -88,11 +88,13 @@ def edit(post_id=None):
                 title='',
                 content='',
                 created_time='',
+
             ),
             author={},
             node=dict(
                 id='',
-            )
+            ),
+            mode='add',
         )
     else:
         p = Post.query.get(post_id)
@@ -104,7 +106,8 @@ def edit(post_id=None):
         data = dict(
             node_list=node_list,
             post=post_schema.dump(p).data,
-            node=node_schema.dump(p.node).data
+            node=node_schema.dump(p.node).data,
+            mode='update',
         )
     return data
 
@@ -130,7 +133,8 @@ def delete(post_id):
     if valid:
         p.comments.delete()
         p.delete()
-    abort(403)
+    else:
+        abort(403)
 
 def subscribe_post(post):
     subscribe = {
